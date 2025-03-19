@@ -1,14 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.ijse.gdse71.serenity.controller.TherapistController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.TherapistController">
+    <children>
+        <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+            </padding>
+            <children>
+                <!-- Header -->
+                <Label text="Therapist" textFill="GREEN">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="5.0" />
+                    </padding>
+                </Label>
 
+                <!-- Therapist Form -->
+                <HBox spacing="15.0">
+                    <children>
+                        <VBox spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="80.0" text="ID" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lblTherapistId" text="ID" textFill="#2c3e50">
+                                            <font>
+                                                <Font size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefHeight="17.0" prefWidth="82.0" text="Specialization:" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ChoiceBox fx:id="specializationChoice" prefWidth="150.0" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <VBox spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="80.0" text="Name:" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtName" prefHeight="30.0" prefWidth="220.0" promptText="Enter therapist name" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <!-- Buttons -->
+                <HBox alignment="CENTER" spacing="10.0">
+                    <children>
+                        <Label fx:id="errorMessage" prefHeight="17.0" prefWidth="112.0" />
+                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addTherapist" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Add">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updateTherapist" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Update">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteTherapist" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #e74c3c; -x-text-fill: white;" text="Delete">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetForm" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white;" text="Reset">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets top="10.0" />
+                    </padding>
+                </HBox>
+
+                <!-- Therapist Records Header -->
+                <Label text="Therapist Records:" textFill="GREEN">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
+
+                <!-- Therapist Records Table -->
+                <TableView fx:id="tblTherapists" onMouseClicked="#therapistSelectOnAction" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colId" prefWidth="100.0" text="ID" />
+                        <TableColumn fx:id="colName" prefWidth="250.0" text="Name" />
+                        <TableColumn fx:id="colSpecialization" prefWidth="350.0" text="Specialization" />
+                    </columns>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

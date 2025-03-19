@@ -1,14 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.ijse.gdse71.serenity.controller.PaymentController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.PaymentController">
+    <children>
+        <VBox layoutX="1.0" prefHeight="600.0" prefWidth="800.0" spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
+            </padding>
+            <children>
+                <!-- Header -->
+                <Label text="Payment &amp; Invoice Management" textFill="GREEN">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <padding>
+                        <Insets bottom="5.0" />
+                    </padding>
+                </Label>
 
+                <!-- Payment Form -->
+                <HBox spacing="15.0">
+                    <children>
+                        <VBox spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="90.0" text="Payment ID:" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lblPaymentId" text="Automatic" textFill="#2c3e50">
+                                            <font>
+                                                <Font size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="90.0" text="Date:" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <DatePicker fx:id="datePickerPayment" prefHeight="30.0" prefWidth="220.0" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="90.0" text="Amount:" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtAmount" prefHeight="30.0" prefWidth="220.0" promptText="Enter payment amount" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <VBox spacing="15.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="90.0" text="Patient:" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ChoiceBox fx:id="selectPatient" prefHeight="30.0" prefWidth="220.0" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                    <children>
+                                        <Label prefWidth="90.0" text="Session:" textFill="GREEN">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ChoiceBox fx:id="selectSession" prefHeight="30.0" prefWidth="220.0" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="10.0" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <!-- Buttons -->
+                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="537.0" spacing="10.0">
+                    <children>
+                        <Label fx:id="errorMessage" prefHeight="17.0" prefWidth="112.0" />
+                        <Button fx:id="btnProcess" mnemonicParsing="false" onAction="#processPayment" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Process Payment">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#updatePayment" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #f39c12; -fx-text-fill: white;" text="Update">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnReset" mnemonicParsing="false" onAction="#resetForm" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #7f8c8d; -fx-text-fill: white;" text="Reset">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets top="10.0" />
+                    </padding>
+                </HBox>
+
+                <!-- Payment Records Header -->
+                <Label text="Payment Records:" textFill="GREEN">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </Label>
+
+                <!-- Payment Records Table -->
+                <TableView fx:id="tblPayments" onMouseClicked="#paymentSelectOnAction" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colPaymentId" prefWidth="100.0" text="Payment ID" />
+                        <TableColumn fx:id="colAmount" prefWidth="144.00001525878906" text="Amount" />
+                        <TableColumn fx:id="colDate" prefWidth="138.66668701171875" text="Date" />
+                        <TableColumn fx:id="colPatient" prefWidth="173.99993896484375" text="Patient" />
+                        <TableColumn fx:id="colSession" prefWidth="182.0" text="Session ID" />
+                    </columns>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

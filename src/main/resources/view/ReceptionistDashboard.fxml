@@ -1,14 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.ijse.gdse71.serenity.controller.ReceptionistDashboardController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.ReceptionistDashboardController">
+    <children>
+        <VBox prefHeight="600.0" prefWidth="200.0" style="-fx-background-color: green;">
+            <children>
+                <HBox alignment="CENTER" prefHeight="70.0" style="-fx-background-color: green;">
+               <children>
+                  <Label text="Serenity" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Black" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+                </HBox>
+                <VBox spacing="3.0" style="-fx-background-color: green;" VBox.vgrow="ALWAYS">
+                    <padding>
+                        <Insets top="10.0" />
+                    </padding>
+                    <children>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navDash" prefHeight="45.0" style="-fx-background-color: green; -fx-border-width: 0 0 0 5; -fx-border-color: brown;" text="Dashboard" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navAppoinments" prefHeight="45.0" style="-fx-background-color: transparent;" text="Appointments" textFill="WHITE">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navPatitnt" prefHeight="45.0" style="-fx-background-color: transparent;" text="Patients" textFill="WHITE">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navTherapist" prefHeight="45.0" style="-fx-background-color: transparent;" text="Therapists" textFill="WHITE">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navSessions" prefHeight="45.0" style="-fx-background-color: transparent;" text="Sessions" textFill="WHITE">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navBilling" prefHeight="45.0" style="-fx-background-color: transparent;" text="Billing" textFill="WHITE">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navReports" prefHeight="45.0" style="-fx-background-color: transparent;" text="Reports" textFill="WHITE">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                        </Button>
+                    </children>
+                </VBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="50.0" style="-fx-background-color: green;">
+                    <children>
+                        <Region prefHeight="50.0" prefWidth="15.0" />
+                        <VBox>
+                            <children>
+                                <Label text="Receptionist User" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                        <Label text="Log Out" textFill="#ffbe3b">
+                           <font>
+                              <Font name="Segoe UI Bold" size="10.0" />
+                           </font>
+                        </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+            <effect>
+                <DropShadow height="20.0" radius="9.5" width="20.0">
+                    <color>
+                        <Color opacity="0.15" />
+                    </color>
+                </DropShadow>
+            </effect>
+        </VBox>
+        <AnchorPane fx:id="loadPageAnchor" layoutX="200.0" prefHeight="600.0" prefWidth="800.0" />
+    </children>
 </AnchorPane>
