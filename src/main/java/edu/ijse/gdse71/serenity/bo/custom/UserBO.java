@@ -17,6 +17,6 @@ public interface UserBO extends SuperBO {
     Optional<String> getLastPK();
     boolean exist(String id) throws SQLException, ClassNotFoundException;
 
-    boolean cheackUser(String userName);
-    UserDTO cheackPassword(String userName);
+    boolean checkUser(String userName);
+    UserDTO checkPassword(String userName);
 }

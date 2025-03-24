@@ -54,12 +54,12 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public boolean cheackUser(String userName) {
+    public boolean checkUser(String userName) {
         return userDAO.cheackUser(userName);
     }
 
     @Override
-    public UserDTO cheackPassword(String userName) {
+    public UserDTO checkPassword(String userName) {
         User user = userDAO.getSelectUser(userName);
         return toUserDTO(user);
     }
