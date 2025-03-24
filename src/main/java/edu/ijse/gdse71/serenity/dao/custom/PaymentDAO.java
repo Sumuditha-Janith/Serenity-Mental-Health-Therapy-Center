@@ -1,4 +1,8 @@
 package edu.ijse.gdse71.serenity.dao.custom;
 
-public interface PaymentDAO {
+import edu.ijse.gdse71.serenity.dao.CrudDAO;
+import edu.ijse.gdse71.serenity.entity.Payment;
+
+public interface PaymentDAO extends CrudDAO<Payment,String> {
+
 }

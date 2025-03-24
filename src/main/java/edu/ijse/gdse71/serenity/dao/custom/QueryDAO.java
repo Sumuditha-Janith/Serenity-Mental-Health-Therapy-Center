@@ -1,4 +1,6 @@
 package edu.ijse.gdse71.serenity.dao.custom;
 
-public interface QueryDAO {
+import edu.ijse.gdse71.serenity.dao.SuperDAO;
+
+public interface QueryDAO extends SuperDAO {
 }
