@@ -77,5 +77,4 @@ public class PaymentController {
     void updatePayment(ActionEvent event) {
 
     }
-
 }

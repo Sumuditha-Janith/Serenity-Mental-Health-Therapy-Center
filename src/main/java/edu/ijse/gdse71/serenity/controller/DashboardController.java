@@ -17,5 +17,4 @@ public class DashboardController {
     @FXML
     private Label therapistsCount;
 
-
 }

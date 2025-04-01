@@ -93,5 +93,4 @@ public class TherapySessionController {
     void updateSession(ActionEvent event) {
 
     }
-
 }
