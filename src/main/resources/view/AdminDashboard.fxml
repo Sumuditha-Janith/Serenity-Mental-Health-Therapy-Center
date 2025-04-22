@@ -38,7 +38,7 @@
                         <Font name="Segoe UI Semibold" size="13.0" />
                      </font>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navAppoinments" prefHeight="45.0" style="-fx-background-color: transparent;" text="Appointments" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navAppointments" prefHeight="45.0" style="-fx-background-color: transparent;" text="Appointments" textFill="WHITE">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -46,7 +46,7 @@
                         <Font name="Segoe UI Semibold" size="13.0" />
                      </font>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navPatitnt" prefHeight="45.0" style="-fx-background-color: transparent;" text="Patients" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navPatient" prefHeight="45.0" style="-fx-background-color: transparent;" text="Patients" textFill="WHITE">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>

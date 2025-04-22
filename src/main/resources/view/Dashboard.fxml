@@ -9,7 +9,11 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="30.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="30.0"
+      style="-fx-background-color: #151515;"
+      xmlns="http://javafx.com/javafx/22"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="edu.ijse.gdse71.serenity.controller.DashboardController">
    <padding>
       <Insets bottom="30.0" left="30.0" right="30.0" top="40.0" />
    </padding>

@@ -43,5 +43,4 @@ public class ReceptionistDashboardController {
     void navTherapist(ActionEvent event) {
 
     }
-
 }

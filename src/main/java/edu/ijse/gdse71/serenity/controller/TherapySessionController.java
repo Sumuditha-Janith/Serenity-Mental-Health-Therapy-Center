@@ -210,5 +210,4 @@ public class TherapySessionController implements Initializable {
         ObservableList<TherapySessionDTO> therapySessionTMS = FXCollections.observableArrayList(therapySessionList);
         tblTherapySessions.setItems(therapySessionTMS);
     }
-
 }

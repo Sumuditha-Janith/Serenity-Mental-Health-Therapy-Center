@@ -93,7 +93,6 @@ public class TherapyProgramController implements Initializable {
         therapyProgramDTO.setDuration(duration);
         therapyProgramDTO.setFee(Double.parseDouble(fee));
 
-
         boolean isAdded = therapyProgramBO.save(therapyProgramDTO);
 
         if (isAdded) {
