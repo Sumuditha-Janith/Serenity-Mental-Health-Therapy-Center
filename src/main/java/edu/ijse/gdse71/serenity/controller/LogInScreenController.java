@@ -25,7 +25,7 @@ public class LogInScreenController {
     private AnchorPane mainAnchor;
 
     @FXML
-    private TextField txtEmail;
+    private TextField txtUsername;
 
     @FXML
     private PasswordField txtPassword;
@@ -34,7 +34,7 @@ public class LogInScreenController {
 
     @FXML
     void navHomePage(ActionEvent event) throws IOException {
-        String userName = txtEmail.getText();
+        String userName = txtUsername.getText();
         String password = txtPassword.getText();
 
         if(userName.isEmpty() || password.isEmpty()){
@@ -59,7 +59,8 @@ public class LogInScreenController {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Invalid password");
+                resetFields();
+                alert.setContentText("Invalid Password");
                 alert.show();
             }else {
                 if(role.equals("Admin")){
@@ -74,7 +75,8 @@ public class LogInScreenController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Invalid email");
+            resetFields();
+            alert.setContentText("Invalid Username");
             alert.showAndWait();
         }
     }
@@ -83,6 +85,11 @@ public class LogInScreenController {
     void navSignUp(MouseEvent event) throws IOException {
         mainAnchor.getChildren().clear();
         mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/SignUpScreen.fxml")));
+    }
+
+    private void resetFields() {
+        txtUsername.setText("");
+        txtPassword.setText("");
     }
 
 }

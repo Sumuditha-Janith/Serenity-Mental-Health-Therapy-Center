@@ -38,7 +38,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </Text>
-            <TextField fx:id="txtEmail" prefHeight="40.0" prefWidth="250.0" promptText="Email" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;">
+            <TextField fx:id="txtUsername" prefHeight="40.0" prefWidth="250.0" promptText="Username" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;">
                <font>
                   <Font size="14.0" />
                </font>

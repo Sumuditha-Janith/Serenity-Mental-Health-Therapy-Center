@@ -135,10 +135,11 @@ public class TherapyProgramController implements Initializable {
         errorMessage.setText("");
         selectTime.setValue(null);
         lblProgramId.setText(this.id);
+        btnAdd.setDisable(false);
     }
 
     @FXML
-    void therapyProgramSelectOnAction(MouseEvent event) {
+    void onClickTherapyProgramTable(MouseEvent event) {
         TherapyProgramDTO selectedPatient = tblTherapyPrograms.getSelectionModel().getSelectedItem();
         if (selectedPatient != null) {
             lblProgramId.setText(selectedPatient.getProgramId());
@@ -148,6 +149,7 @@ public class TherapyProgramController implements Initializable {
             txtDuration.setText(parts[0]);
             selectTime.setValue(parts[1]);
             txtFee.setText(String.valueOf(selectedPatient.getFee()));
+            btnAdd.setDisable(true);
         }
     }
 

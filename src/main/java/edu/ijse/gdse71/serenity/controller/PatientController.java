@@ -143,7 +143,7 @@ public class PatientController implements Initializable {
     }
 
     @FXML
-    void petientSelectOnAction(MouseEvent event) {
+    void onClickPatientTable(MouseEvent event) {
         PatientDTO selectedPatient = tblPatients.getSelectionModel().getSelectedItem();
 
         if (selectedPatient != null) {
@@ -151,6 +151,7 @@ public class PatientController implements Initializable {
             txtName.setText(selectedPatient.getName());
             txtContact.setText(selectedPatient.getContactInfo());
             cmbGender.setValue(selectedPatient.getGender());
+            btnAdd.setDisable(true);
 
             dpRegDate.setDisable(true);
 
@@ -169,6 +170,7 @@ public class PatientController implements Initializable {
         cmbGender.setValue(null);
         dpRegDate.setText(LocalDate.now().toString());
         lblPatientId.setText(id);
+        btnAdd.setDisable(false);
         dpRegDate.setDisable(false);
     }
 

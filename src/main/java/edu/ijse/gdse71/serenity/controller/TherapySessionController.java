@@ -114,6 +114,7 @@ public class TherapySessionController implements Initializable {
         selectTherapist.getSelectionModel().clearSelection();
         selectTime.getSelectionModel().clearSelection();
         datePickerSession.setValue(null);
+        btnSchedule.setDisable(true);
     }
 
     @FXML
@@ -145,7 +146,7 @@ public class TherapySessionController implements Initializable {
     }
 
     @FXML
-    void sessionSelectOnAction(MouseEvent event) {
+    void onclickTherapySessionTable(MouseEvent event) {
         TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
         if (selectedSession != null) {
             lblSessionId.setText(selectedSession.getId());
@@ -157,6 +158,7 @@ public class TherapySessionController implements Initializable {
             selectTherapist.setDisable(true);
             selectProgram.setValue(selectedSession.getTherapyProgram().getName());
             selectProgram.setDisable(true);
+            btnSchedule.setDisable(true);
         }
     }
 

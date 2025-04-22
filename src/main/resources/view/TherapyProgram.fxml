@@ -130,7 +130,7 @@
                 </Label>
 
                 <!-- Therapy Program Records Table -->
-                <TableView fx:id="tblTherapyPrograms" onMouseClicked="#therapyProgramSelectOnAction" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblTherapyPrograms" onMouseClicked="#onClickTherapyProgramTable" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colProgramId" prefWidth="100.0" text="Program ID" />
                         <TableColumn fx:id="colName" prefWidth="277.3333282470703" text="Name" />

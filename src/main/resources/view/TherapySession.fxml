@@ -150,7 +150,7 @@
                 </Label>
 
                 <!-- Session Records Table -->
-                <TableView fx:id="tblTherapySessions" onMouseClicked="#sessionSelectOnAction" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblTherapySessions" onMouseClicked="#onclickTherapySessionTable" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colSessionId" prefWidth="80.0" text="Session ID" />
                         <TableColumn fx:id="colDate" prefWidth="90.0" text="Date" />

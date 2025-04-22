@@ -114,18 +114,19 @@ public class TherapistController implements Initializable {
     void resetForm(ActionEvent event) {
         txtName.clear();
         specializationChoice.setValue(null);
+        btnAdd.setDisable(false);
         specializationChoice.setDisable(false);
         lblTherapistId.setText(id);
     }
 
     @FXML
-    void therapistSelectOnAction(MouseEvent event) {
+    void onClickTherapistTable(MouseEvent event) {
         TherapistDTO selectedTherapist = tblTherapists.getSelectionModel().getSelectedItem();
         if (selectedTherapist != null) {
             lblTherapistId.setText(selectedTherapist.getId());
             txtName.setText(selectedTherapist.getName());
             specializationChoice.setValue(selectedTherapist.getSpecialization());
-            specializationChoice.setDisable(true);
+            btnAdd.setDisable(true);
         }
     }
 
