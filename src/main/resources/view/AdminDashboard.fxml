@@ -62,7 +62,7 @@
                         <Font name="Segoe UI Semibold" size="13.0" />
                      </font>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navPrograms" prefHeight="45.0" style="-fx-background-color: transparent;" text="Programs" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navPrograms" prefHeight="45.0" style="-fx-background-color: transparent;" text="Therapy Programs" textFill="WHITE">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -70,7 +70,7 @@
                         <Font name="Segoe UI Semibold" size="13.0" />
                      </font>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navBilling" prefHeight="45.0" style="-fx-background-color: transparent;" text="Billing" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navBilling" prefHeight="45.0" style="-fx-background-color: transparent;" text="Billing and Payments" textFill="WHITE">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -91,18 +91,18 @@
                 <HBox alignment="CENTER_LEFT" prefHeight="50.0" style="-fx-background-color: green;">
                     <children>
                         <Region prefHeight="50.0" prefWidth="15.0" />
-                        <VBox>
+                        <VBox alignment="CENTER" prefHeight="50.0" prefWidth="217.0">
                             <children>
-                                <Label text="Admin User" textFill="WHITE">
+                                <Label prefHeight="13.0" prefWidth="152.0" text="Logged In as Admin" textAlignment="CENTER" textFill="WHITE">
                                     <font>
                                         <Font name="Segoe UI" size="12.0" />
                                     </font>
                                 </Label>
-                                <Label text="Log Out" textFill="#ffbe3b">
-                                    <font>
-                                        <Font name="Segoe UI Bold" size="10.0" />
-                                    </font>
-                                </Label>
+                        <Button mnemonicParsing="false" onAction="#logOutOnAction" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #e74c3c;" text="Log Out" textFill="#f0ffffc9">
+                           <font>
+                              <Font name="Segoe UI Semibold" size="12.0" />
+                           </font>
+                        </Button>
                             </children>
                         </VBox>
                     </children>

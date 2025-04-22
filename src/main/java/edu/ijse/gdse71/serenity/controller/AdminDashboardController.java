@@ -9,8 +9,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -102,4 +105,18 @@ public class AdminDashboardController implements Initializable {
     void navReports(ActionEvent event) {
 
     }
+
+    @FXML
+    void logOutOnAction(ActionEvent event) throws IOException {
+
+        Stage stage = (Stage) loadPageAnchor.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LogInScreen.fxml"));
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("Serenity");
+        stage.setResizable(false);
+        stage.show();
+    }
+
 }

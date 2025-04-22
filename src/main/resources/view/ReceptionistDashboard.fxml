@@ -61,7 +61,7 @@
                                 <Insets left="20.0" />
                             </padding>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navSessions" prefHeight="45.0" style="-fx-background-color: transparent;" text="Sessions" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navSessions" prefHeight="45.0" style="-fx-background-color: transparent;" text="Therapy Programs" textFill="WHITE">
                             <font>
                                 <Font size="12.0" />
                             </font>
@@ -69,7 +69,7 @@
                                 <Insets left="20.0" />
                             </padding>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navBilling" prefHeight="45.0" style="-fx-background-color: transparent;" text="Billing" textFill="WHITE">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navBilling" prefHeight="45.0" style="-fx-background-color: transparent;" text="Billing and Payments" textFill="WHITE">
                             <font>
                                 <Font size="12.0" />
                             </font>
@@ -97,11 +97,6 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </Label>
-                        <Label text="Log Out" textFill="#ffbe3b">
-                           <font>
-                              <Font name="Segoe UI Bold" size="10.0" />
-                           </font>
-                        </Label>
                             </children>
                         </VBox>
                     </children>
