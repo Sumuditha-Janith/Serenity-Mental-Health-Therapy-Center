@@ -126,7 +126,7 @@
                         <HBox alignment="CENTER" spacing="20.0" />
                   <Pane prefHeight="566.0" prefWidth="739.0">
                      <children>
-                        <Label layoutX="111.0" layoutY="49.0" prefHeight="38.0" prefWidth="528.0" text="Welcome to Mental Health Therapy Center" textFill="GREEN">
+                        <Label layoutX="59.0" layoutY="51.0" prefHeight="38.0" prefWidth="633.0" text="Welcome to Serenity Mental Health Therapy Center" textFill="GREEN">
                            <font>
                               <Font name="System Bold" size="26.0" />
                            </font>
