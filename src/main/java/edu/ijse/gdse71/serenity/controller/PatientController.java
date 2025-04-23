@@ -89,6 +89,7 @@ public class PatientController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Please fill all the fields");
             alert.show();
+            errorMessage.setText("Please fill all the fields");
             return;
         }
 
