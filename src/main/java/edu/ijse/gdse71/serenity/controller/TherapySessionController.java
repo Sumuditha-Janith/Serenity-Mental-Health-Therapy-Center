@@ -1,14 +1,8 @@
 package edu.ijse.gdse71.serenity.controller;
 
 import edu.ijse.gdse71.serenity.bo.BOFactory;
-import edu.ijse.gdse71.serenity.bo.custom.impl.PatientBOImpl;
-import edu.ijse.gdse71.serenity.bo.custom.impl.TherapistBOImpl;
-import edu.ijse.gdse71.serenity.bo.custom.impl.TherapyProgramBOImpl;
-import edu.ijse.gdse71.serenity.bo.custom.impl.TherapySessionBOImpl;
-import edu.ijse.gdse71.serenity.dto.PatientDTO;
-import edu.ijse.gdse71.serenity.dto.TherapistDTO;
-import edu.ijse.gdse71.serenity.dto.TherapyProgramDTO;
-import edu.ijse.gdse71.serenity.dto.TherapySessionDTO;
+import edu.ijse.gdse71.serenity.bo.custom.impl.*;
+import edu.ijse.gdse71.serenity.dto.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,10 +84,13 @@ public class TherapySessionController implements Initializable {
     private final PatientBOImpl patientBO = (PatientBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PATIENT);
     private final TherapistBOImpl therapistBO = (TherapistBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
     private final TherapyProgramBOImpl therapyProgramBO = (TherapyProgramBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
+    private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    private final PaymentSessionBOImpl paymentSessionBO = (PaymentSessionBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT_SESSION);
 
     private PatientDTO patientDTO = new PatientDTO();
     private TherapistDTO therapistDTO = new TherapistDTO();
     private TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
+
 
     @FXML
     void cancelSession(ActionEvent event) throws Exception {
@@ -114,7 +111,6 @@ public class TherapySessionController implements Initializable {
         selectTherapist.getSelectionModel().clearSelection();
         selectTime.getSelectionModel().clearSelection();
         datePickerSession.setValue(null);
-        btnSchedule.setDisable(true);
     }
 
     @FXML
@@ -141,7 +137,20 @@ public class TherapySessionController implements Initializable {
         therapySessionDTO.setTherapist(therapistDTO);
         therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
-        therapySessionBO.save(therapySessionDTO);
+        //therapySessionBO.save(therapySessionDTO);
+
+        PaymentDTO paymentDTO = new PaymentDTO();
+        paymentDTO.setId(paymentBO.getLastPK().orElse("1"));
+        paymentDTO.setAmount(therapyProgramBO.getAmount(programName));
+        paymentDTO.setDate(date);
+        paymentDTO.setStatus("Pending");
+        paymentDTO.setPatient(patientDTO);
+        paymentDTO.setTherapySession(therapySessionDTO);
+
+        paymentSessionBO.saveSession(therapySessionDTO,paymentDTO);
+
+        //paymentBO.save(paymentDTO);
+
         loadTherapyProgramTable();
     }
 
@@ -158,7 +167,6 @@ public class TherapySessionController implements Initializable {
             selectTherapist.setDisable(true);
             selectProgram.setValue(selectedSession.getTherapyProgram().getName());
             selectProgram.setDisable(true);
-            btnSchedule.setDisable(true);
         }
     }
 

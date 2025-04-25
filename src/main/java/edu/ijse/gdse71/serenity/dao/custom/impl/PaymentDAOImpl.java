@@ -4,8 +4,10 @@ import edu.ijse.gdse71.serenity.config.FactoryConfiguration;
 import edu.ijse.gdse71.serenity.dao.custom.PaymentDAO;
 import edu.ijse.gdse71.serenity.entity.Payment;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,25 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public boolean save(Payment payment) {
-        return false;
+        Transaction transaction = null;
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            transaction = session.beginTransaction();
+
+            session.persist(payment);
+
+            transaction.commit();
+            return true;
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
     @Override
     public boolean update(Payment payment) {
@@ -30,7 +49,12 @@ public class PaymentDAOImpl implements PaymentDAO {
 
     @Override
     public List<Payment> getAll() {
-        return List.of();
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            return session.createQuery("FROM Payment ", Payment.class).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
     }
 
     @Override
@@ -68,4 +92,5 @@ public class PaymentDAOImpl implements PaymentDAO {
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
 }

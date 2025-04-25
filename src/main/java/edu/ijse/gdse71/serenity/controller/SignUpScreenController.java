@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -93,6 +94,11 @@ public class SignUpScreenController implements Initializable {
             alert.show();
             return;
         }
+    }
+
+    @FXML
+    void navBackToLogInPage(MouseEvent event) {
+
     }
 
     @Override

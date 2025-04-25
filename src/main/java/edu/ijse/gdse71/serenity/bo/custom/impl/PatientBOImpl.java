@@ -63,10 +63,12 @@ public class PatientBOImpl implements PatientBO {
         return false;
     }
 
+    @Override
     public ArrayList<String> patientList() {
         return patientDAO.patientList();
     }
 
+    @Override
     public PatientDTO getAllPatient(String patientName) {
         Patient patient = patientDAO.getAllPatient(patientName);
         return toDTO(patient);

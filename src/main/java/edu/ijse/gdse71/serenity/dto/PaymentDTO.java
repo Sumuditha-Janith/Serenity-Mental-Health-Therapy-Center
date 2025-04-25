@@ -11,6 +11,7 @@ public class PaymentDTO {
     private String id;
     private double amount;
     private String date;
+    private String status;
     private PatientDTO patient;
     private TherapySessionDTO therapySession;
 }
