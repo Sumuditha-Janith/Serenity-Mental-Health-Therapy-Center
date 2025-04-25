@@ -10,7 +10,7 @@ public class ReceptionistDashboardController {
     private AnchorPane loadPageAnchor;
 
     @FXML
-    void navAppoinments(ActionEvent event) {
+    void navAppointments(ActionEvent event) {
 
     }
 
@@ -25,7 +25,7 @@ public class ReceptionistDashboardController {
     }
 
     @FXML
-    void navPatitnt(ActionEvent event) {
+    void navPatient(ActionEvent event) {
 
     }
 
