@@ -97,8 +97,9 @@ public class SignUpScreenController implements Initializable {
     }
 
     @FXML
-    void navBackToLogInPage(MouseEvent event) {
-
+    void navBackToLogInPage(MouseEvent event) throws IOException {
+        mainAnchor.getChildren().clear();
+        mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/LogInScreen.fxml")));
     }
 
     @Override
