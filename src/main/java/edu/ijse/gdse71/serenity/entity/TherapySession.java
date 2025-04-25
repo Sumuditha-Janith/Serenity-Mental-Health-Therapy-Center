@@ -5,15 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "therapy_sessions")
-public class TherapySession implements SuperEntity{
+public class TherapySession implements SuperEntity {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String date;
     private String time;
@@ -31,4 +33,6 @@ public class TherapySession implements SuperEntity{
     @JoinColumn(name = "program_id")
     private TherapyProgram therapyProgram;
 
+    @OneToMany(mappedBy = "therapySession", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payment> payments = new ArrayList<>();
 }
