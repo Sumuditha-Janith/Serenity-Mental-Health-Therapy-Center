@@ -3,6 +3,7 @@ package edu.ijse.gdse71.serenity.controller;
 import edu.ijse.gdse71.serenity.bo.BOFactory;
 import edu.ijse.gdse71.serenity.bo.custom.impl.PaymentBOImpl;
 import edu.ijse.gdse71.serenity.bo.custom.impl.PaymentSessionBOImpl;
+import edu.ijse.gdse71.serenity.bo.custom.impl.TherapySessionBOImpl;
 import edu.ijse.gdse71.serenity.dto.PaymentDTO;
 import edu.ijse.gdse71.serenity.dto.TherapySessionDTO;
 import javafx.beans.property.SimpleStringProperty;
@@ -87,19 +88,36 @@ public class PaymentController implements Initializable {
 
     @FXML
     void processPayment(ActionEvent event) {
-        String paymentId = lblPaymentId.getText();
-        String sessionId = lblSession.getText();
+        PaymentDTO selectedPayment = tblPayments.getSelectionModel().getSelectedItem();
 
-        PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setId(paymentId);
-        paymentDTO.setStatus("Paid");
+        if (selectedPayment != null) {
+            try {
+                boolean paymentUpdated = paymentBO.updatePaymentStatus(
+                        selectedPayment.getId(), "PAID");
 
-        TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
-        therapySessionDTO.setId(sessionId);
-        therapySessionDTO.setStatus("Completed");
+                if (paymentUpdated) {
+                    TherapySessionBOImpl therapySessionBO = (TherapySessionBOImpl) BOFactory.getInstance()
+                            .getBO(BOFactory.BOType.THERAPY_SESSION);
 
-        paymentSessionBO.updateSession(therapySessionDTO ,paymentDTO);
-        loadPatientTable();
+                    boolean sessionUpdated = therapySessionBO.updateSessionStatus(
+                            selectedPayment.getTherapySession().getId(), "COMPLETED");
+
+                    if (sessionUpdated) {
+                        loadPatientTable();
+                        errorMessage.setText("Payment processed successfully!");
+                    } else {
+                        errorMessage.setText("Failed to update therapy session status");
+                    }
+                } else {
+                    errorMessage.setText("Failed to update payment status");
+                }
+            } catch (Exception e) {
+                errorMessage.setText("Error processing payment: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            errorMessage.setText("Please select a payment to process.");
+        }
     }
 
     @FXML

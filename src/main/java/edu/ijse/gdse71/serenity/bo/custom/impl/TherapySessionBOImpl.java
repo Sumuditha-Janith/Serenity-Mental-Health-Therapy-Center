@@ -157,4 +157,9 @@ public class TherapySessionBOImpl implements TherapySessionBO {
         );
     }
 
+    @Override
+    public boolean updateSessionStatus(String sessionId, String status) {
+        return therapySessionDAO.updateSessionStatus(sessionId, status);
+    }
+
 }

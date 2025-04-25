@@ -143,4 +143,24 @@ public class TherapySessionDAOImpl implements TherapySessionDAO {
     public boolean exist(String id) throws SQLException, ClassNotFoundException {
         return false;
     }
+
+    @Override
+    public boolean updateSessionStatus(String sessionId, String status) {
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+
+            session.createQuery(
+                            "UPDATE TherapySession SET status = :status WHERE id = :id")
+                    .setParameter("status", status)
+                    .setParameter("id", sessionId)
+                    .executeUpdate();
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

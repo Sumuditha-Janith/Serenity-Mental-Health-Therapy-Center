@@ -93,4 +93,27 @@ public class PaymentDAOImpl implements PaymentDAO {
         return false;
     }
 
+    @Override
+    public boolean updatePaymentStatus(String paymentId, String status) {
+        Transaction transaction = null;
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            transaction = session.beginTransaction();
+
+            session.createQuery(
+                            "UPDATE Payment SET status = :status WHERE id = :id")
+                    .setParameter("status", status)
+                    .setParameter("id", paymentId)
+                    .executeUpdate();
+
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

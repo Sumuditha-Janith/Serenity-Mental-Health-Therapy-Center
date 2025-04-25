@@ -137,8 +137,6 @@ public class TherapySessionController implements Initializable {
         therapySessionDTO.setTherapist(therapistDTO);
         therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
-        //therapySessionBO.save(therapySessionDTO);
-
         PaymentDTO paymentDTO = new PaymentDTO();
         paymentDTO.setId(paymentBO.getLastPK().orElse("1"));
         paymentDTO.setAmount(therapyProgramBO.getAmount(programName));
@@ -148,8 +146,6 @@ public class TherapySessionController implements Initializable {
         paymentDTO.setTherapySession(therapySessionDTO);
 
         paymentSessionBO.saveSession(therapySessionDTO,paymentDTO);
-
-        //paymentBO.save(paymentDTO);
 
         loadTherapyProgramTable();
     }
@@ -172,22 +168,36 @@ public class TherapySessionController implements Initializable {
 
     @FXML
     void updateSession(ActionEvent event) {
-        String sessionId = lblSessionId.getText();
-        String date = datePickerSession.getValue().toString();
-        String time = selectTime.getValue();
-        String status = "Pending";
+        try {
+            TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
 
-        TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
-        therapySessionDTO.setId(sessionId);
-        therapySessionDTO.setDate(date);
-        therapySessionDTO.setTime(time);
-        therapySessionDTO.setStatus(status);
-        therapySessionDTO.setPatient(patientDTO);
-        therapySessionDTO.setTherapist(therapistDTO);
-        therapySessionDTO.setTherapyProgram(therapyProgramDTO);
+            if (selectedSession != null) {
+                String originalStatus = selectedSession.getStatus();
 
-        therapySessionBO.update(therapySessionDTO);
-        loadTherapyProgramTable();
+                TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
+                therapySessionDTO.setId(lblSessionId.getText());
+                therapySessionDTO.setDate(datePickerSession.getValue().toString());
+                therapySessionDTO.setTime(selectTime.getValue());
+                therapySessionDTO.setStatus(originalStatus); // Preserve original status
+                therapySessionDTO.setPatient(patientDTO);
+                therapySessionDTO.setTherapist(therapistDTO);
+                therapySessionDTO.setTherapyProgram(therapyProgramDTO);
+
+                boolean updated = therapySessionBO.update(therapySessionDTO);
+
+                if (updated) {
+                    loadTherapyProgramTable();
+                    errorMessage.setText("Session updated successfully!");
+                } else {
+                    errorMessage.setText("Failed to update session");
+                }
+            } else {
+                errorMessage.setText("Please select a session to update");
+            }
+        } catch (Exception e) {
+            errorMessage.setText("Error updating session: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override

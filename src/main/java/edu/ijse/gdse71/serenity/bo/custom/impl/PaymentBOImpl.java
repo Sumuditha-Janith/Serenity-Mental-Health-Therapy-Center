@@ -27,7 +27,8 @@ public class PaymentBOImpl implements PaymentBO {
 
     @Override
     public boolean update(PaymentDTO payment) {
-        return false;
+        Payment paymentEntity = toEntity(payment);
+        return paymentDAO.update(paymentEntity);
     }
 
     @Override
@@ -99,5 +100,9 @@ public class PaymentBOImpl implements PaymentBO {
         );
     }
 
+    @Override
+    public boolean updatePaymentStatus(String paymentId, String status) {
+        return paymentDAO.updatePaymentStatus(paymentId, status);
+    }
 
 }
