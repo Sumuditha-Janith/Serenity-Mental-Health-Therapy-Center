@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -108,12 +109,13 @@ public class TherapySessionController implements Initializable {
     @FXML
     void scheduleSession(ActionEvent event) {
         try {
-
             if (selectPatient.getValue() == null || selectTherapist.getValue() == null ||
                     selectProgram.getValue() == null || datePickerSession.getValue() == null ||
                     selectTime.getValue() == null) {
                 throw new Exception("Please fill all required fields");
             }
+
+            validateSessionDate();
 
             String patientName = selectPatient.getValue();
             String therapistName = selectTherapist.getValue();
@@ -173,7 +175,7 @@ public class TherapySessionController implements Initializable {
             btnSchedule.setDisable(true);
             btnUpdate.setDisable(false);
 
-            btnCancel.setDisable("COMPLETED".equalsIgnoreCase(selectedSession.getStatus()));
+            btnCancel.setDisable("Completed".equalsIgnoreCase(selectedSession.getStatus()));
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Error loading session details: " + e.getMessage()).show();
         }
@@ -190,6 +192,8 @@ public class TherapySessionController implements Initializable {
             if (datePickerSession.getValue() == null || selectTime.getValue() == null) {
                 throw new Exception("Please fill all required fields");
             }
+
+            validateSessionDate();
 
             String originalStatus = selectedSession.getStatus();
 
@@ -209,7 +213,7 @@ public class TherapySessionController implements Initializable {
                 new Alert(Alert.AlertType.INFORMATION, "Session updated successfully").show();
                 refreshPage();
 
-                if ("COMPLETED".equalsIgnoreCase(originalStatus)) {
+                if ("Completed".equalsIgnoreCase(originalStatus)) {
                     btnCancel.setDisable(true);
                 }
             } else {
@@ -276,11 +280,25 @@ public class TherapySessionController implements Initializable {
 
             btnSchedule.setDisable(false);
             btnUpdate.setDisable(true);
-            btnCancel.setDisable(true);  // Keep this disabled by default on refresh
+            btnCancel.setDisable(true);
 
             tblTherapySessions.getSelectionModel().clearSelection();
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Failed to refresh page: " + e.getMessage()).show();
         }
     }
+
+    private void validateSessionDate() throws Exception {
+        if (datePickerSession.getValue() == null) {
+            throw new Exception("Please select a session date");
+        }
+
+        LocalDate selectedDate = datePickerSession.getValue();
+        LocalDate currentDate = LocalDate.now();
+
+        if (selectedDate.isBefore(currentDate)) {
+            throw new Exception("Session date cannot be before today's date");
+        }
+    }
+
 }

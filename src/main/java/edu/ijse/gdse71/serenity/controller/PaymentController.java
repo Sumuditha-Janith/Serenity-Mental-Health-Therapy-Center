@@ -62,7 +62,7 @@ public class PaymentController implements Initializable {
             }
 
             boolean paymentUpdated = paymentBO.updatePaymentStatus(
-                    selectedPayment.getId(), "PAID");
+                    selectedPayment.getId(), "Paid");
 
             if (!paymentUpdated) {
                 throw new Exception("Failed to update payment status");
@@ -72,7 +72,7 @@ public class PaymentController implements Initializable {
                     .getBO(BOFactory.BOType.THERAPY_SESSION);
 
             boolean sessionUpdated = therapySessionBO.updateSessionStatus(
-                    selectedPayment.getTherapySession().getId(), "COMPLETED");
+                    selectedPayment.getTherapySession().getId(), "Completed");
 
             if (!sessionUpdated) {
                 throw new Exception("Failed to update therapy session status");
