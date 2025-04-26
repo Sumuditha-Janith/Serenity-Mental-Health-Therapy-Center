@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class LogInScreenController {
 
@@ -34,61 +35,69 @@ public class LogInScreenController {
 
     @FXML
     void navHomePage(ActionEvent event) throws IOException {
-        String userName = txtUsername.getText();
-        String password = txtPassword.getText();
+        String userName = txtUsername.getText().trim();
+        String password = txtPassword.getText().trim();
 
-        if(userName.isEmpty() || password.isEmpty()){
-            System.out.println("Empty");
+        // Input validations
+        if (userName.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Username and password cannot be empty");
+            txtUsername.requestFocus();
             return;
         }
 
-        boolean result = userBO.checkUser(userName);
+        if (userName.length() < 3) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Username must be at least 3 characters long");
+            txtUsername.requestFocus();
+            return;
+        }
 
-        if(result){
-            UserDTO userDTO = userBO.checkPassword(userName);
+        if (!Pattern.matches("^[a-zA-Z0-9_]+$", userName)) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Username can only contain letters, numbers and underscores");
+            txtUsername.requestFocus();
+            return;
+        }
 
-            String role = userDTO.getRole();
-            String hashedDTO = userDTO.getPassword();
+        if (password.length() < 8) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Password must be at least 8 characters long");
+            txtPassword.requestFocus();
+            return;
+        }
 
-            System.out.println("In controller" + hashedDTO);
-            System.out.println(role);
+        try {
+            boolean userExists = userBO.checkUser(userName);
 
-            boolean isPasswordValid = PasswordUtils.verifyPassword(password, hashedDTO);
-
-            if(!isPasswordValid){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
+            if (!userExists) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Invalid username or password");
                 resetFields();
-                alert.setContentText("Invalid Password");
-                alert.show();
-            }else {
-                if(role.equals("Admin")){
-                    mainAnchor.getChildren().clear();
-                    mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml")));
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Logged In");
-                    alert.setHeaderText("Logged In");
-                    alert.setContentText("You Are Now Logged In As Admin");
-                    alert.showAndWait();
-
-                }else if(role.equals("Receptionist")){
-                    mainAnchor.getChildren().clear();
-                    mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/ReceptionistDashboard.fxml")));
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Logged In");
-                    alert.setHeaderText("Logged In");
-                    alert.setContentText("You Are Now Logged In As Receptionist");
-                    alert.showAndWait();
-                }
+                txtUsername.requestFocus();
+                return;
             }
-        }else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
+
+            UserDTO userDTO = userBO.checkPassword(userName);
+            String role = userDTO.getRole();
+            String hashedPassword = userDTO.getPassword();
+
+            boolean isPasswordValid = PasswordUtils.verifyPassword(password, hashedPassword);
+
+            if (!isPasswordValid) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Invalid username or password");
+                resetFields();
+                txtUsername.requestFocus();
+                return;
+            }
+
+            // Successful login
+            String dashboardFxml = role.equals("Admin") ? "/view/AdminDashboard.fxml" : "/view/ReceptionistDashboard.fxml";
+            String roleName = role.equals("Admin") ? "Admin" : "Receptionist";
+
+            mainAnchor.getChildren().clear();
+            mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource(dashboardFxml)));
+
+            showAlert(Alert.AlertType.INFORMATION, "Success", "You are now logged in as " + roleName);
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "An error occurred during login: " + e.getMessage());
             resetFields();
-            alert.setContentText("Invalid Username");
-            alert.showAndWait();
         }
     }
 
@@ -99,8 +108,14 @@ public class LogInScreenController {
     }
 
     private void resetFields() {
-        txtUsername.setText("");
         txtPassword.setText("");
     }
 
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

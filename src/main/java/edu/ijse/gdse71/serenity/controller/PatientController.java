@@ -75,7 +75,6 @@ public class PatientController implements Initializable {
             String gender = cmbGender.getValue();
             String regDate = dpRegDate.getText();
 
-            // Validate inputs
             if (name.isEmpty() || contact.isEmpty() || gender == null || regDate.isEmpty()) {
                 throw new Exception("Please fill all the fields");
             }
@@ -163,7 +162,6 @@ public class PatientController implements Initializable {
             String gender = cmbGender.getValue();
             String regDate = dpRegDate.getText();
 
-            // Validate inputs
             if (name.isEmpty() || contact.isEmpty() || gender == null || regDate.isEmpty()) {
                 throw new Exception("Please fill all the fields");
             }

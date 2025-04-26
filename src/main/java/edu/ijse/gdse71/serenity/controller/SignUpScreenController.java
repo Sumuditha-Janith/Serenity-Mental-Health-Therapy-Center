@@ -24,9 +24,6 @@ public class SignUpScreenController implements Initializable {
     private ChoiceBox<String> choiceRole;
 
     @FXML
-    private Label lblError;
-
-    @FXML
     private AnchorPane mainAnchor;
 
     @FXML
@@ -42,7 +39,6 @@ public class SignUpScreenController implements Initializable {
 
     @FXML
     void navLogInPage(ActionEvent event) throws IOException {
-
         String userName = txtUserName.getText();
         String password = txtPassword.getText();
         String role = choiceRole.getValue();
@@ -56,23 +52,23 @@ public class SignUpScreenController implements Initializable {
         System.out.println(role);
         System.out.println(confirmPassword);
 
-        if(userName.isEmpty() || password.isEmpty() || role.isEmpty() || confirmPassword.isEmpty()){
-            lblError.setText("Please fill all the fields");
+        if(userName.isEmpty() || password.isEmpty() || role == null || role.isEmpty() || confirmPassword.isEmpty()){
+            showAlert(Alert.AlertType.ERROR, "Error", "Please fill all the fields");
             return;
         }
 
         if(password.length() < 8){
-            lblError.setText("Password must be at least 8 characters");
+            showAlert(Alert.AlertType.ERROR, "Error", "Password must be at least 8 characters");
             return;
         }
 
         if(!password.equals(confirmPassword)){
-            lblError.setText("Password does not match");
+            showAlert(Alert.AlertType.ERROR, "Error", "Password does not match");
             return;
         }
 
         if(userBO.checkUser(userName)){
-            lblError.setText("User already exist");
+            showAlert(Alert.AlertType.ERROR, "Error", "User already exists");
             return;
         }
 
@@ -85,13 +81,10 @@ public class SignUpScreenController implements Initializable {
         boolean result = userBO.save(userDTO);
 
         if(result){
+            showAlert(Alert.AlertType.INFORMATION, "Success", "User created successfully!");
             mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/LogInScreen.fxml")));
         }else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("User sign up failed");
-            alert.show();
+            showAlert(Alert.AlertType.ERROR, "Error", "User sign up failed");
             return;
         }
     }
@@ -105,5 +98,13 @@ public class SignUpScreenController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         choiceRole.getItems().addAll("Admin", "Receptionist");
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 }
