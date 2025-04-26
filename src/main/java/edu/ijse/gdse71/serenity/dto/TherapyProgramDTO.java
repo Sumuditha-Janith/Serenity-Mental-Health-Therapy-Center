@@ -13,6 +13,4 @@ public class TherapyProgramDTO {
     private String duration;
     private double fee;
 
-//    @OneToMany(mappedBy = "therapyProgram")
-//    private List<TherapySessionsDTO> therapySessions;
 }

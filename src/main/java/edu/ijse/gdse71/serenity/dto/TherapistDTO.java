@@ -12,7 +12,4 @@ public class TherapistDTO {
     private String name;
     private String specialization;
 
-//    @OneToMany(mappedBy = "therapist")
-//    private List<TherapySessionsDTO> therapySessions;
-
 }

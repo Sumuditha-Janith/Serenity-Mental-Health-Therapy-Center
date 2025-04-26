@@ -2,10 +2,8 @@ package edu.ijse.gdse71.serenity.controller;
 
 import edu.ijse.gdse71.serenity.bo.BOFactory;
 import edu.ijse.gdse71.serenity.bo.custom.impl.PaymentBOImpl;
-import edu.ijse.gdse71.serenity.bo.custom.impl.PaymentSessionBOImpl;
 import edu.ijse.gdse71.serenity.bo.custom.impl.TherapySessionBOImpl;
 import edu.ijse.gdse71.serenity.dto.PaymentDTO;
-import edu.ijse.gdse71.serenity.dto.TherapySessionDTO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,11 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -72,7 +68,6 @@ public class PaymentController implements Initializable {
     private Label lblPatient;
 
     private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
-    private final PaymentSessionBOImpl paymentSessionBO = (PaymentSessionBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT_SESSION);
 
     @FXML
     void paymentSelectOnAction(MouseEvent event) {
