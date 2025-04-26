@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -117,6 +118,13 @@ public class AdminDashboardController implements Initializable {
         stage.setTitle("Serenity");
         stage.setResizable(false);
         stage.show();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Logged Out");
+        alert.setHeaderText("Logged Out");
+        alert.setContentText("You Are Now Logged Out");
+        alert.showAndWait();
+
     }
 
 }

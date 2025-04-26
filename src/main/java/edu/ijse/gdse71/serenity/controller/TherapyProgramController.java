@@ -129,13 +129,18 @@ public class TherapyProgramController implements Initializable {
 
     @FXML
     void resetForm(ActionEvent event) {
+        this.id = therapyProgramBO.getLastPK().orElse("0");
+        lblProgramId.setText(this.id);
         txtName.clear();
         txtDuration.clear();
         txtFee.clear();
-        errorMessage.setText("");
         selectTime.setValue(null);
-        lblProgramId.setText(this.id);
+
+        errorMessage.setText("");
+
         btnAdd.setDisable(false);
+
+        tblTherapyPrograms.getSelectionModel().clearSelection();
     }
 
     @FXML

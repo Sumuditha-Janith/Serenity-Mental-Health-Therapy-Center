@@ -66,9 +66,20 @@ public class LogInScreenController {
                 if(role.equals("Admin")){
                     mainAnchor.getChildren().clear();
                     mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml")));
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Logged In");
+                    alert.setHeaderText("Logged In");
+                    alert.setContentText("You Are Now Logged In As Admin");
+                    alert.showAndWait();
+
                 }else if(role.equals("Receptionist")){
                     mainAnchor.getChildren().clear();
                     mainAnchor.getChildren().add(FXMLLoader.load(getClass().getResource("/view/ReceptionistDashboard.fxml")));
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Logged In");
+                    alert.setHeaderText("Logged In");
+                    alert.setContentText("You Are Now Logged In As Receptionist");
+                    alert.showAndWait();
                 }
             }
         }else{

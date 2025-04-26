@@ -10,12 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -47,9 +42,6 @@ public class TherapistController implements Initializable {
     private TableColumn<TherapistDTO, String> colSpecialization;
 
     @FXML
-    private Label errorMessage;
-
-    @FXML
     private Label lblTherapistId;
 
     @FXML
@@ -62,122 +54,155 @@ public class TherapistController implements Initializable {
     private TextField txtName;
 
     private String id;
-
     private final TherapistBOImpl therapistBO = (TherapistBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
     private final TherapyProgramBOImpl therapyProgramBO = (TherapyProgramBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
 
     @FXML
     void addTherapist(ActionEvent event) {
-        String id = this.id;
-        String name = txtName.getText();
-        String specialization = specializationChoice.getValue();
+        try {
+            String name = txtName.getText();
+            String specialization = specializationChoice.getValue();
 
-        if(name.isEmpty() || specialization.isEmpty()){
-            errorMessage.setText("Please fill all the fields");
-            return;
-        }
+            if(name.isEmpty() || specialization == null) {
+                throw new Exception("Please fill all the fields");
+            }
 
-        TherapistDTO therapistDTO = new TherapistDTO();
-        therapistDTO.setId(id);
-        therapistDTO.setName(name);
-        therapistDTO.setSpecialization(specialization);
+            TherapistDTO therapistDTO = new TherapistDTO();
+            therapistDTO.setId(this.id);
+            therapistDTO.setName(name);
+            therapistDTO.setSpecialization(specialization);
 
-        boolean isAdded = therapistBO.save(therapistDTO);
+            boolean isAdded = therapistBO.save(therapistDTO);
 
-        if(isAdded){
-            txtName.clear();
-            specializationChoice.setValue(null);
-            this.id = String.valueOf(therapistBO.getLastPK().orElse("Error"));
+            if(!isAdded) {
+                throw new Exception("Failed to add therapist");
+            }
+
+            new Alert(Alert.AlertType.INFORMATION, "Therapist added successfully").show();
+            refreshPage();
+            this.id = therapistBO.getLastPK().orElse("Error");
+            lblTherapistId.setText(this.id);
             loadTherapistTable();
-        }else{
-            errorMessage.setText("Failed to add therapist");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
-    void deleteTherapist(ActionEvent event) throws Exception {
-        String id = lblTherapistId.getText();
-        boolean isDeleted = therapistBO.deleteByPK(id);
+    void deleteTherapist(ActionEvent event) {
+        try {
+            String id = lblTherapistId.getText();
+            if (id == null || id.isEmpty()) {
+                throw new Exception("No therapist selected");
+            }
 
-        if (isDeleted) {
-            txtName.clear();
-            specializationChoice.setValue(null);
-            specializationChoice.setDisable(false);
-            lblTherapistId.setText(id);
+            boolean isDeleted = therapistBO.deleteByPK(id);
+            if (!isDeleted) {
+                throw new Exception("Failed to delete therapist");
+            }
+
+            new Alert(Alert.AlertType.INFORMATION, "Therapist deleted successfully").show();
+            refreshPage();
             loadTherapistTable();
-        } else {
-            System.out.println("Failed to delete therapist");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
     void resetForm(ActionEvent event) {
-        txtName.clear();
-        specializationChoice.setValue(null);
-        btnAdd.setDisable(false);
-        specializationChoice.setDisable(false);
-        lblTherapistId.setText(id);
+        refreshPage();
     }
 
     @FXML
     void onClickTherapistTable(MouseEvent event) {
-        TherapistDTO selectedTherapist = tblTherapists.getSelectionModel().getSelectedItem();
-        if (selectedTherapist != null) {
+        try {
+            TherapistDTO selectedTherapist = tblTherapists.getSelectionModel().getSelectedItem();
+            if (selectedTherapist == null) return;
+
             lblTherapistId.setText(selectedTherapist.getId());
             txtName.setText(selectedTherapist.getName());
             specializationChoice.setValue(selectedTherapist.getSpecialization());
             btnAdd.setDisable(true);
+            btnUpdate.setDisable(false);
+            btnDelete.setDisable(false);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error loading therapist: " + e.getMessage()).show();
         }
     }
 
     @FXML
     void updateTherapist(ActionEvent event) {
-        String id = lblTherapistId.getText();
-        String name = txtName.getText();
-        specializationChoice.setDisable(true);
-        String specialization = specializationChoice.getValue();
+        try {
+            String id = lblTherapistId.getText();
+            String name = txtName.getText();
+            String specialization = specializationChoice.getValue();
 
-        if(name.isEmpty() || specialization.isEmpty()){
-            errorMessage.setText("Please fill all the fields");
-            return;
-        }
+            if(name.isEmpty() || specialization == null) {
+                throw new Exception("Please fill all the fields");
+            }
 
-        TherapistDTO therapistDTO = new TherapistDTO();
-        therapistDTO.setId(id);
-        therapistDTO.setName(name);
-        therapistDTO.setSpecialization(specialization);
+            TherapistDTO therapistDTO = new TherapistDTO();
+            therapistDTO.setId(id);
+            therapistDTO.setName(name);
+            therapistDTO.setSpecialization(specialization);
 
-        boolean isUpdated = therapistBO.update(therapistDTO);
+            boolean isUpdated = therapistBO.update(therapistDTO);
+            if (!isUpdated) {
+                throw new Exception("Failed to update therapist");
+            }
 
-        if(isUpdated){
-            txtName.clear();
-            specializationChoice.setValue(null);
-            specializationChoice.setDisable(false);
+            new Alert(Alert.AlertType.INFORMATION, "Therapist updated successfully").show();
+            refreshPage();
             loadTherapistTable();
-        }else{
-            errorMessage.setText("Failed to update therapist");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.id = String.valueOf(therapistBO.getLastPK().orElse("Error"));
-        lblTherapistId.setText(id);
+        try {
+            this.id = therapistBO.getLastPK().orElse("Error");
+            lblTherapistId.setText(this.id);
 
-        ArrayList<String> programList = therapyProgramBO.getProgramList();
-        System.out.println(programList);
-        specializationChoice.getItems().addAll(programList);
+            ArrayList<String> programList = therapyProgramBO.getProgramList();
+            specializationChoice.getItems().addAll(programList);
 
-        colId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-        colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        colSpecialization.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSpecialization()));
+            colId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+            colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+            colSpecialization.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSpecialization()));
 
-        loadTherapistTable();
+            loadTherapistTable();
+            refreshPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Initialization error: " + e.getMessage()).show();
+        }
     }
 
     private void loadTherapistTable() {
-        List<TherapistDTO> therapistList = therapistBO.getAll();
-        ObservableList<TherapistDTO> therapistTMS = FXCollections.observableArrayList(therapistList);
-        tblTherapists.setItems(therapistTMS);
+        try {
+            List<TherapistDTO> therapistList = therapistBO.getAll();
+            ObservableList<TherapistDTO> therapistTMS = FXCollections.observableArrayList(therapistList);
+            tblTherapists.setItems(therapistTMS);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load therapists: " + e.getMessage()).show();
+        }
+    }
+
+    private void refreshPage() {
+        try {
+            txtName.clear();
+            specializationChoice.setValue(null);
+            specializationChoice.setDisable(false);
+            btnAdd.setDisable(false);
+            btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
+            tblTherapists.getSelectionModel().clearSelection();
+            this.id = therapistBO.getLastPK().orElse("Error");
+            lblTherapistId.setText(this.id);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Refresh error: " + e.getMessage()).show();
+        }
     }
 }

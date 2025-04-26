@@ -53,9 +53,6 @@ public class PatientController implements Initializable {
     private Label dpRegDate;
 
     @FXML
-    private Label errorMessage;
-
-    @FXML
     private Label lblPatientId;
 
     @FXML
@@ -72,132 +69,108 @@ public class PatientController implements Initializable {
 
     @FXML
     void addPatient(ActionEvent event) {
-        String id = this.id;
+        try {
+            String name = txtName.getText().trim();
+            String contact = txtContact.getText().trim();
+            String gender = cmbGender.getValue();
+            String regDate = dpRegDate.getText();
 
-        String name = txtName.getText();
+            // Validate inputs
+            if (name.isEmpty() || contact.isEmpty() || gender == null || regDate.isEmpty()) {
+                throw new Exception("Please fill all the fields");
+            }
 
-        String contact = txtContact.getText();
-        String regex = "^07\\d{8}$";
+            if (!contact.matches("^07\\d{8}$")) {
+                throw new Exception("Invalid contact number. Must start with 07 and have 10 digits");
+            }
 
-        String gender = cmbGender.getValue();
+            PatientDTO patientDTO = new PatientDTO();
+            patientDTO.setId(this.id);
+            patientDTO.setName(name);
+            patientDTO.setContactInfo(contact);
+            patientDTO.setGender(gender);
+            patientDTO.setBirthDate(regDate);
 
-        String regDate = dpRegDate.getText();
+            boolean isSaved = patientBO.save(patientDTO);
 
-        if(name.isEmpty() || contact.isEmpty() || gender.isEmpty() || regDate.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill all the fields");
-            alert.show();
-            errorMessage.setText("Please fill all the fields");
-            return;
-        }
+            if (!isSaved) {
+                throw new Exception("Failed to save patient");
+            }
 
-        if (contact.matches(regex)) {
-            System.out.println("Valid contact number: " + contact);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid contact number");
-            alert.show();
-            return;
-        }
-
-        PatientDTO patientDTO = new PatientDTO();
-        patientDTO.setId(id);
-        patientDTO.setName(name);
-        patientDTO.setContactInfo(contact);
-        patientDTO.setGender(gender);
-        patientDTO.setBirthDate(regDate);
-
-        boolean isSaved = patientBO.save(patientDTO);
-
-        if (isSaved) {
-            txtName.clear();
-            txtContact.clear();
-            cmbGender.setValue(null);
-            dpRegDate.setText(null);
-            this.id = String.valueOf(patientBO.getLastPK().orElse("Error"));
+            new Alert(Alert.AlertType.INFORMATION, "Patient added successfully").show();
+            refreshPage();
+            this.id = patientBO.getLastPK().orElse("Error");
+            lblPatientId.setText(this.id);
             loadPatientTable();
-        } else {
-            System.out.println("Failed to save patient");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
-    void deletePatient(ActionEvent event) throws Exception {
-        String id = lblPatientId.getText();
-        boolean isDeleted = patientBO.deleteByPK(id);
+    void deletePatient(ActionEvent event) {
+        try {
+            String id = lblPatientId.getText();
+            if (id == null || id.isEmpty()) {
+                throw new Exception("No patient selected");
+            }
 
-        if (isDeleted) {
-            txtName.clear();
-            txtContact.clear();
-            cmbGender.setValue(null);
-            dpRegDate.setText(null);
-            lblPatientId.setText(id);
-            dpRegDate.setDisable(false);
+            boolean isDeleted = patientBO.deleteByPK(id);
+            if (!isDeleted) {
+                throw new Exception("Failed to delete patient");
+            }
+
+            new Alert(Alert.AlertType.INFORMATION, "Patient deleted successfully").show();
+            refreshPage();
             loadPatientTable();
-        } else {
-            System.out.println("Failed to delete patient");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
     void onClickPatientTable(MouseEvent event) {
-        PatientDTO selectedPatient = tblPatients.getSelectionModel().getSelectedItem();
+        try {
+            PatientDTO selectedPatient = tblPatients.getSelectionModel().getSelectedItem();
+            if (selectedPatient == null) return;
 
-        if (selectedPatient != null) {
             lblPatientId.setText(selectedPatient.getId());
             txtName.setText(selectedPatient.getName());
             txtContact.setText(selectedPatient.getContactInfo());
             cmbGender.setValue(selectedPatient.getGender());
+            dpRegDate.setText(selectedPatient.getBirthDate());
+
             btnAdd.setDisable(true);
-
+            btnUpdate.setDisable(false);
+            btnDelete.setDisable(false);
             dpRegDate.setDisable(true);
-
-            if (selectedPatient.getBirthDate() != null && !selectedPatient.getBirthDate().isEmpty()) {
-                dpRegDate.setText(String.valueOf(LocalDate.parse(selectedPatient.getBirthDate())));
-            } else {
-                dpRegDate.setText(null);
-            }
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error loading patient: " + e.getMessage()).show();
         }
     }
 
     @FXML
     void resetForm(ActionEvent event) {
-        txtName.clear();
-        txtContact.clear();
-        cmbGender.setValue(null);
-        dpRegDate.setText(LocalDate.now().toString());
-        lblPatientId.setText(id);
-        btnAdd.setDisable(false);
-        dpRegDate.setDisable(false);
+        refreshPage();
     }
 
     @FXML
     void updatePatient(ActionEvent event) {
-        String id = lblPatientId.getText();
+        try {
+            String id = lblPatientId.getText();
+            String name = txtName.getText().trim();
+            String contact = txtContact.getText().trim();
+            String gender = cmbGender.getValue();
+            String regDate = dpRegDate.getText();
 
-        String name = txtName.getText();
+            // Validate inputs
+            if (name.isEmpty() || contact.isEmpty() || gender == null || regDate.isEmpty()) {
+                throw new Exception("Please fill all the fields");
+            }
 
-        String contact = txtContact.getText();
-        String regex = "^07\\d{8}$";
-
-        String gender = cmbGender.getValue();
-
-        String regDate = dpRegDate.getText();
-
-        if(name.isEmpty() || contact.isEmpty() || gender.isEmpty() || regDate.isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please fill all the fields");
-            alert.show();
-            return;
-        }
-
-        if (contact.matches(regex)) {
+            if (!contact.matches("^07\\d{8}$")) {
+                throw new Exception("Invalid contact number. Must start with 07 and have 10 digits");
+            }
 
             PatientDTO patientDTO = new PatientDTO();
             patientDTO.setId(id);
@@ -208,40 +181,66 @@ public class PatientController implements Initializable {
 
             boolean isUpdated = patientBO.update(patientDTO);
 
-            if (isUpdated) {
-                loadPatientTable();
-            } else {
-                System.out.println("Failed to update patient");
+            if (!isUpdated) {
+                throw new Exception("Failed to update patient");
             }
 
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Invalid contact number");
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "Patient updated successfully").show();
+            refreshPage();
+            loadPatientTable();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        dpRegDate.setText(String.valueOf(LocalDate.now()));
-        cmbGender.getItems().addAll("Male", "Female");
-        this.id = String.valueOf(patientBO.getLastPK().orElse("Error"));
-        lblPatientId.setText(id);
+        try {
+            dpRegDate.setText(LocalDate.now().toString());
+            cmbGender.getItems().addAll("Male", "Female");
+            this.id = patientBO.getLastPK().orElse("Error");
+            lblPatientId.setText(this.id);
 
-        colId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-        colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        colContact.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContactInfo()));
-        colGender.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGender()));
-        colRegDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBirthDate()));
+            colId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+            colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+            colContact.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getContactInfo()));
+            colGender.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getGender()));
+            colRegDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getBirthDate()));
 
-        loadPatientTable();
+            loadPatientTable();
+            refreshPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Initialization error: " + e.getMessage()).show();
+        }
     }
 
     private void loadPatientTable() {
-        List<PatientDTO> patientList = patientBO.getAll();
-        ObservableList<PatientDTO> patientTMS = FXCollections.observableArrayList(patientList);
-        tblPatients.setItems(patientTMS);
+        try {
+            List<PatientDTO> patientList = patientBO.getAll();
+            ObservableList<PatientDTO> patientTMS = FXCollections.observableArrayList(patientList);
+            tblPatients.setItems(patientTMS);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load patients: " + e.getMessage()).show();
+        }
+    }
+
+    private void refreshPage() {
+        try {
+            txtName.clear();
+            txtContact.clear();
+            cmbGender.setValue(null);
+            dpRegDate.setText(LocalDate.now().toString());
+            this.id = patientBO.getLastPK().orElse("Error");
+            lblPatientId.setText(this.id);
+
+            btnAdd.setDisable(false);
+            btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
+            dpRegDate.setDisable(false);
+
+            tblPatients.getSelectionModel().clearSelection();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error refreshing form: " + e.getMessage()).show();
+        }
     }
 }

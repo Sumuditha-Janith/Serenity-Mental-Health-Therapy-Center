@@ -9,12 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -60,9 +55,6 @@ public class TherapySessionController implements Initializable {
     private DatePicker datePickerSession;
 
     @FXML
-    private Label errorMessage;
-
-    @FXML
     private Label lblSessionId;
 
     @FXML
@@ -91,69 +83,84 @@ public class TherapySessionController implements Initializable {
     private TherapistDTO therapistDTO = new TherapistDTO();
     private TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
 
-
     @FXML
-    void cancelSession(ActionEvent event) throws Exception {
-        TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
-        if (selectedSession != null) {
+    void cancelSession(ActionEvent event) {
+        try {
+            TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
+            if (selectedSession == null) {
+                throw new Exception("Please select a session to cancel");
+            }
+
             therapySessionBO.deleteByPK(selectedSession.getId());
             loadTherapyProgramTable();
-        } else {
-            errorMessage.setText("Please select a session to cancel.");
+            new Alert(Alert.AlertType.INFORMATION, "Session cancelled successfully").show();
+            refreshPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
     void resetForm(ActionEvent event) {
-        lblSessionId.setText(therapySessionBO.getLastPK().orElse("1"));
-        selectPatient.getSelectionModel().clearSelection();
-        selectProgram.getSelectionModel().clearSelection();
-        selectTherapist.getSelectionModel().clearSelection();
-        selectTime.getSelectionModel().clearSelection();
-        datePickerSession.setValue(null);
+        refreshPage();
     }
 
     @FXML
     void scheduleSession(ActionEvent event) {
-        String patientName = selectPatient.getValue();
-        String therapistName = selectTherapist.getValue();
-        String programName = selectProgram.getValue();
+        try {
 
-        patientDTO = patientBO.getAllPatient(patientName);
-        therapistDTO = therapistBO.getAllTherapist(therapistName);
-        therapyProgramDTO = therapyProgramBO.getAllTherapyProgram(programName);
+            if (selectPatient.getValue() == null || selectTherapist.getValue() == null ||
+                    selectProgram.getValue() == null || datePickerSession.getValue() == null ||
+                    selectTime.getValue() == null) {
+                throw new Exception("Please fill all required fields");
+            }
 
-        String sessionId = lblSessionId.getText();
-        String date = datePickerSession.getValue().toString();
-        String time = selectTime.getValue();
-        String status = "Pending";
+            String patientName = selectPatient.getValue();
+            String therapistName = selectTherapist.getValue();
+            String programName = selectProgram.getValue();
 
-        TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
-        therapySessionDTO.setId(sessionId);
-        therapySessionDTO.setDate(date);
-        therapySessionDTO.setTime(time);
-        therapySessionDTO.setStatus(status);
-        therapySessionDTO.setPatient(patientDTO);
-        therapySessionDTO.setTherapist(therapistDTO);
-        therapySessionDTO.setTherapyProgram(therapyProgramDTO);
+            patientDTO = patientBO.getAllPatient(patientName);
+            therapistDTO = therapistBO.getAllTherapist(therapistName);
+            therapyProgramDTO = therapyProgramBO.getAllTherapyProgram(programName);
 
-        PaymentDTO paymentDTO = new PaymentDTO();
-        paymentDTO.setId(paymentBO.getLastPK().orElse("1"));
-        paymentDTO.setAmount(therapyProgramBO.getAmount(programName));
-        paymentDTO.setDate(date);
-        paymentDTO.setStatus("Pending");
-        paymentDTO.setPatient(patientDTO);
-        paymentDTO.setTherapySession(therapySessionDTO);
+            String sessionId = lblSessionId.getText();
+            String date = datePickerSession.getValue().toString();
+            String time = selectTime.getValue();
+            String status = "Pending";
 
-        paymentSessionBO.saveSession(therapySessionDTO,paymentDTO);
+            TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
+            therapySessionDTO.setId(sessionId);
+            therapySessionDTO.setDate(date);
+            therapySessionDTO.setTime(time);
+            therapySessionDTO.setStatus(status);
+            therapySessionDTO.setPatient(patientDTO);
+            therapySessionDTO.setTherapist(therapistDTO);
+            therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
-        loadTherapyProgramTable();
+            PaymentDTO paymentDTO = new PaymentDTO();
+            paymentDTO.setId(paymentBO.getLastPK().orElse("1"));
+            paymentDTO.setAmount(therapyProgramBO.getAmount(programName));
+            paymentDTO.setDate(date);
+            paymentDTO.setStatus("Pending");
+            paymentDTO.setPatient(patientDTO);
+            paymentDTO.setTherapySession(therapySessionDTO);
+
+            paymentSessionBO.saveSession(therapySessionDTO, paymentDTO);
+
+            loadTherapyProgramTable();
+            new Alert(Alert.AlertType.INFORMATION, "Session scheduled successfully").show();
+            refreshPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     @FXML
     void onclickTherapySessionTable(MouseEvent event) {
-        TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
-        if (selectedSession != null) {
+        try {
+            TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
+            if (selectedSession == null) return;
+
             lblSessionId.setText(selectedSession.getId());
             datePickerSession.setValue(java.time.LocalDate.parse(selectedSession.getDate()));
             selectTime.setValue(selectedSession.getTime());
@@ -163,6 +170,12 @@ public class TherapySessionController implements Initializable {
             selectTherapist.setDisable(true);
             selectProgram.setValue(selectedSession.getTherapyProgram().getName());
             selectProgram.setDisable(true);
+            btnSchedule.setDisable(true);
+            btnUpdate.setDisable(false);
+
+            btnCancel.setDisable("COMPLETED".equalsIgnoreCase(selectedSession.getStatus()));
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error loading session details: " + e.getMessage()).show();
         }
     }
 
@@ -170,64 +183,104 @@ public class TherapySessionController implements Initializable {
     void updateSession(ActionEvent event) {
         try {
             TherapySessionDTO selectedSession = tblTherapySessions.getSelectionModel().getSelectedItem();
+            if (selectedSession == null) {
+                throw new Exception("Please select a session to update");
+            }
 
-            if (selectedSession != null) {
-                String originalStatus = selectedSession.getStatus();
+            if (datePickerSession.getValue() == null || selectTime.getValue() == null) {
+                throw new Exception("Please fill all required fields");
+            }
 
-                TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
-                therapySessionDTO.setId(lblSessionId.getText());
-                therapySessionDTO.setDate(datePickerSession.getValue().toString());
-                therapySessionDTO.setTime(selectTime.getValue());
-                therapySessionDTO.setStatus(originalStatus); // Preserve original status
-                therapySessionDTO.setPatient(patientDTO);
-                therapySessionDTO.setTherapist(therapistDTO);
-                therapySessionDTO.setTherapyProgram(therapyProgramDTO);
+            String originalStatus = selectedSession.getStatus();
 
-                boolean updated = therapySessionBO.update(therapySessionDTO);
+            TherapySessionDTO therapySessionDTO = new TherapySessionDTO();
+            therapySessionDTO.setId(lblSessionId.getText());
+            therapySessionDTO.setDate(datePickerSession.getValue().toString());
+            therapySessionDTO.setTime(selectTime.getValue());
+            therapySessionDTO.setStatus(originalStatus);
+            therapySessionDTO.setPatient(patientDTO);
+            therapySessionDTO.setTherapist(therapistDTO);
+            therapySessionDTO.setTherapyProgram(therapyProgramDTO);
 
-                if (updated) {
-                    loadTherapyProgramTable();
-                    errorMessage.setText("Session updated successfully!");
-                } else {
-                    errorMessage.setText("Failed to update session");
+            boolean updated = therapySessionBO.update(therapySessionDTO);
+
+            if (updated) {
+                loadTherapyProgramTable();
+                new Alert(Alert.AlertType.INFORMATION, "Session updated successfully").show();
+                refreshPage();
+
+                if ("COMPLETED".equalsIgnoreCase(originalStatus)) {
+                    btnCancel.setDisable(true);
                 }
             } else {
-                errorMessage.setText("Please select a session to update");
+                throw new Exception("Failed to update session");
             }
         } catch (Exception e) {
-            errorMessage.setText("Error updating session: " + e.getMessage());
-            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        lblSessionId.setText(therapySessionBO.getLastPK().orElse("1"));
+        try {
+            lblSessionId.setText(therapySessionBO.getLastPK().orElse("1"));
 
-        List<String> patientList = patientBO.patientList();
-        List<String> therapistList = therapistBO.therapistList();
-        List<String> programList = therapyProgramBO.getProgramList();
+            List<String> patientList = patientBO.patientList();
+            List<String> therapistList = therapistBO.therapistList();
+            List<String> programList = therapyProgramBO.getProgramList();
 
-        selectPatient.getItems().addAll(patientList);
-        selectTherapist.getItems().addAll(therapistList);
-        selectProgram.getItems().addAll(programList);
+            selectPatient.getItems().addAll(patientList);
+            selectTherapist.getItems().addAll(therapistList);
+            selectProgram.getItems().addAll(programList);
 
-        selectTime.getItems().addAll("08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM");
+            selectTime.getItems().addAll("08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM",
+                    "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM");
 
-        colSessionId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
-        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDate()));
-        colTime.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTime()));
-        colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
-        colPatient.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatient().getName()));
-        colTherapist.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapist().getName()));
-        colProgram.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapyProgram().getName()));
+            colSessionId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+            colDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDate()));
+            colTime.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTime()));
+            colStatus.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStatus()));
+            colPatient.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPatient().getName()));
+            colTherapist.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapist().getName()));
+            colProgram.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTherapyProgram().getName()));
 
-        loadTherapyProgramTable();
+            loadTherapyProgramTable();
+            refreshPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to initialize: " + e.getMessage()).show();
+        }
     }
 
     private void loadTherapyProgramTable() {
-        List<TherapySessionDTO> therapySessionList = therapySessionBO.getAll();
-        ObservableList<TherapySessionDTO> therapySessionTMS = FXCollections.observableArrayList(therapySessionList);
-        tblTherapySessions.setItems(therapySessionTMS);
+        try {
+            List<TherapySessionDTO> therapySessionList = therapySessionBO.getAll();
+            ObservableList<TherapySessionDTO> therapySessionTMS = FXCollections.observableArrayList(therapySessionList);
+            tblTherapySessions.setItems(therapySessionTMS);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load sessions: " + e.getMessage()).show();
+        }
+    }
+
+    private void refreshPage() {
+        try {
+            lblSessionId.setText(therapySessionBO.getLastPK().orElse("1"));
+            datePickerSession.setValue(null);
+            selectTime.setValue(null);
+            selectPatient.setValue(null);
+            selectTherapist.setValue(null);
+            selectProgram.setValue(null);
+
+            selectPatient.setDisable(false);
+            selectTherapist.setDisable(false);
+            selectProgram.setDisable(false);
+
+            btnSchedule.setDisable(false);
+            btnUpdate.setDisable(true);
+            btnCancel.setDisable(true);  // Keep this disabled by default on refresh
+
+            tblTherapySessions.getSelectionModel().clearSelection();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to refresh page: " + e.getMessage()).show();
+        }
     }
 }
