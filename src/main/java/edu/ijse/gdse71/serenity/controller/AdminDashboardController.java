@@ -106,11 +106,6 @@ public class AdminDashboardController implements Initializable {
     }
 
     @FXML
-    void navReports(ActionEvent event) {
-
-    }
-
-    @FXML
     void logOutOnAction(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout Confirmation");

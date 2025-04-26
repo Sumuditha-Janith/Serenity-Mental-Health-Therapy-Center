@@ -20,20 +20,47 @@ import java.util.ResourceBundle;
 
 public class PaymentController implements Initializable {
 
-    @FXML private Button btnProcess;
-    @FXML private Button btnReset;
-    @FXML private TableColumn<PaymentDTO, String> colAmount;
-    @FXML private TableColumn<PaymentDTO, String> colDate;
-    @FXML private TableColumn<PaymentDTO, String> colPatient;
-    @FXML private TableColumn<PaymentDTO, String> colPaymentId;
-    @FXML private TableColumn<PaymentDTO, String> colSession;
-    @FXML private TableColumn<PaymentDTO, String> colStatus;
-    @FXML private Label lblPaymentId;
-    @FXML private TableView<PaymentDTO> tblPayments;
-    @FXML private Label lblAmount;
-    @FXML private Label lblDate;
-    @FXML private Label lblSession;
-    @FXML private Label lblPatient;
+    @FXML
+    private Button btnProcess;
+
+    @FXML
+    private Button btnReset;
+
+    @FXML
+    private TableColumn<PaymentDTO, String> colAmount;
+
+    @FXML
+    private TableColumn<PaymentDTO, String> colDate;
+
+    @FXML
+    private TableColumn<PaymentDTO, String> colPatient;
+
+    @FXML
+    private TableColumn<PaymentDTO, String> colPaymentId;
+
+    @FXML
+    private TableColumn<PaymentDTO, String> colSession;
+
+    @FXML
+    private TableColumn<PaymentDTO, String> colStatus;
+
+    @FXML
+    private Label lblPaymentId;
+
+    @FXML
+    private TableView<PaymentDTO> tblPayments;
+
+    @FXML
+    private Label lblAmount;
+
+    @FXML
+    private Label lblDate;
+
+    @FXML
+    private Label lblSession;
+
+    @FXML
+    private Label lblPatient;
 
     private final PaymentBOImpl paymentBO = (PaymentBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
 
@@ -48,7 +75,8 @@ public class PaymentController implements Initializable {
             lblDate.setText(String.valueOf(selectedPayment.getDate()));
             lblSession.setText(selectedPayment.getTherapySession().getId());
             lblPatient.setText(selectedPayment.getPatient().getId());
-            btnProcess.setDisable(false);
+
+            btnProcess.setDisable("Paid".equals(selectedPayment.getStatus()));
         } catch (Exception e) {
             new Alert(Alert.AlertType.ERROR, "Error selecting payment: " + e.getMessage()).show();
         }

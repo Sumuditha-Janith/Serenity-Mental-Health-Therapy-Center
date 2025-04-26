@@ -5,6 +5,8 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -21,7 +23,7 @@
             <Font name="Arial" size="18.0" />
          </font>
       </Text>
-      <VBox alignment="CENTER" layoutX="550.0" layoutY="150.0" prefHeight="300.0" prefWidth="350.0" spacing="20.0" style="-fx-background-color: #373F51; -fx-background-radius: 10; -fx-padding: 30;">
+      <VBox alignment="CENTER" layoutX="574.0" layoutY="147.0" prefHeight="300.0" prefWidth="350.0" spacing="20.0" style="-fx-background-color: #373F51; -fx-background-radius: 10; -fx-padding: 30;">
          <effect>
             <DropShadow height="20.0" radius="9.5" width="20.0">
                <color>
@@ -79,8 +81,13 @@
             </HBox>
          </children>
       </VBox>
-      <VBox layoutX="22.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0">
+      <VBox alignment="CENTER" layoutX="22.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0">
          <children>
+            <ImageView fitHeight="200.0" fitWidth="200.0">
+               <image>
+                  <Image url="@../images/tree.png" />
+               </image>
+            </ImageView>
             <Text fill="#373f51" strokeType="OUTSIDE" strokeWidth="0.0" text="Serenity" textAlignment="CENTER" wrappingWidth="455.83538818359375">
                <font>
                   <Font name="Segoe UI Historic" size="42.0" />

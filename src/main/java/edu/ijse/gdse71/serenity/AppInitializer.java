@@ -15,7 +15,7 @@ public class AppInitializer extends Application {
     public void start(Stage stage) throws IOException {
         Parent load = FXMLLoader.load((getClass().getResource("/view/LogInScreen.fxml")));
         stage.setScene(new Scene(load));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/serenity-s.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
         stage.setTitle("Serenity Mental Health Therapy Center");
         stage.setResizable(false);
         stage.show();

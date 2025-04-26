@@ -78,14 +78,6 @@
                         <Font name="Segoe UI Semibold" size="13.0" />
                      </font>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#navReports" prefHeight="45.0" style="-fx-background-color: transparent;" text="Reports" textFill="#1b1b1e">
-                            <padding>
-                                <Insets left="20.0" />
-                            </padding>
-                     <font>
-                        <Font name="Segoe UI Semibold" size="13.0" />
-                     </font>
-                        </Button>
                     </children>
                 </VBox>
                 <HBox alignment="CENTER_LEFT" prefHeight="50.0" style="-fx-background-color: #58A4B0;">

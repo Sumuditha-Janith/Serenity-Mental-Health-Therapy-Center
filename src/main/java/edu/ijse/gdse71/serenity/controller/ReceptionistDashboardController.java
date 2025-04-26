@@ -62,11 +62,6 @@ public class ReceptionistDashboardController implements Initializable {
     }
 
     @FXML
-    void navReports(ActionEvent event) {
-
-    }
-
-    @FXML
     void logOutOnAction(ActionEvent event) throws IOException {
 
         Stage stage = (Stage) loadPageAnchor.getScene().getWindow();

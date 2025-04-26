@@ -3,6 +3,7 @@ package edu.ijse.gdse71.serenity.controller;
 import edu.ijse.gdse71.serenity.bo.BOFactory;
 import edu.ijse.gdse71.serenity.bo.custom.impl.TherapyProgramBOImpl;
 import edu.ijse.gdse71.serenity.dto.TherapyProgramDTO;
+import edu.ijse.gdse71.serenity.exeception.RequiredFieldException;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -72,8 +73,17 @@ public class TherapyProgramController implements Initializable {
             String timeUnit = selectTime.getValue();
             String fee = txtFee.getText().trim();
 
-            if (name.isEmpty() || duration.isEmpty() || timeUnit == null || fee.isEmpty()) {
-                throw new Exception("Please fill all the fields");
+            if (name.isEmpty()) {
+                throw new RequiredFieldException("program name");
+            }
+            if (duration.isEmpty()) {
+                throw new RequiredFieldException("duration");
+            }
+            if (timeUnit == null) {
+                throw new RequiredFieldException("time unit");
+            }
+            if (fee.isEmpty()) {
+                throw new RequiredFieldException("fee");
             }
 
             if (!duration.matches("^\\d+$")) {
@@ -164,8 +174,17 @@ public class TherapyProgramController implements Initializable {
             String timeUnit = selectTime.getValue();
             String fee = txtFee.getText().trim();
 
-            if (name.isEmpty() || duration.isEmpty() || timeUnit == null || fee.isEmpty()) {
-                throw new Exception("Please fill all the fields");
+            if (name.isEmpty()) {
+                throw new RequiredFieldException("program name");
+            }
+            if (duration.isEmpty()) {
+                throw new RequiredFieldException("duration");
+            }
+            if (timeUnit == null) {
+                throw new RequiredFieldException("time unit");
+            }
+            if (fee.isEmpty()) {
+                throw new RequiredFieldException("fee");
             }
 
             if (!duration.matches("^\\d+$")) {

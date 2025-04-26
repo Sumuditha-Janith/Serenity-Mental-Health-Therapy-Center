@@ -4,6 +4,7 @@ import edu.ijse.gdse71.serenity.bo.BOFactory;
 import edu.ijse.gdse71.serenity.bo.custom.impl.TherapistBOImpl;
 import edu.ijse.gdse71.serenity.bo.custom.impl.TherapyProgramBOImpl;
 import edu.ijse.gdse71.serenity.dto.TherapistDTO;
+import edu.ijse.gdse71.serenity.exeception.RequiredFieldException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,8 +64,11 @@ public class TherapistController implements Initializable {
             String name = txtName.getText();
             String specialization = specializationChoice.getValue();
 
-            if(name.isEmpty() || specialization == null) {
-                throw new Exception("Please fill all the fields");
+            if(name.isEmpty()) {
+                throw new RequiredFieldException("therapist name");
+            }
+            if(specialization == null) {
+                throw new RequiredFieldException("specialization");
             }
 
             TherapistDTO therapistDTO = new TherapistDTO();
@@ -138,8 +142,11 @@ public class TherapistController implements Initializable {
             String name = txtName.getText();
             String specialization = specializationChoice.getValue();
 
-            if(name.isEmpty() || specialization == null) {
-                throw new Exception("Please fill all the fields");
+            if(name.isEmpty()) {
+                throw new RequiredFieldException("therapist name");
+            }
+            if(specialization == null) {
+                throw new RequiredFieldException("specialization");
             }
 
             TherapistDTO therapistDTO = new TherapistDTO();

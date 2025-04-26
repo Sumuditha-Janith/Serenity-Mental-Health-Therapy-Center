@@ -3,6 +3,7 @@ package edu.ijse.gdse71.serenity.controller;
 import edu.ijse.gdse71.serenity.bo.BOFactory;
 import edu.ijse.gdse71.serenity.bo.custom.impl.PatientBOImpl;
 import edu.ijse.gdse71.serenity.dto.PatientDTO;
+import edu.ijse.gdse71.serenity.exeception.RequiredFieldException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -75,8 +76,17 @@ public class PatientController implements Initializable {
             String gender = cmbGender.getValue();
             String regDate = dpRegDate.getText();
 
-            if (name.isEmpty() || contact.isEmpty() || gender == null || regDate.isEmpty()) {
-                throw new Exception("Please fill all the fields");
+            if (name.isEmpty()) {
+                throw new RequiredFieldException("name");
+            }
+            if (contact.isEmpty()) {
+                throw new RequiredFieldException("contact");
+            }
+            if (gender == null) {
+                throw new RequiredFieldException("gender");
+            }
+            if (regDate.isEmpty()) {
+                throw new RequiredFieldException("registration date");
             }
 
             if (!contact.matches("^07\\d{8}$")) {
@@ -162,8 +172,17 @@ public class PatientController implements Initializable {
             String gender = cmbGender.getValue();
             String regDate = dpRegDate.getText();
 
-            if (name.isEmpty() || contact.isEmpty() || gender == null || regDate.isEmpty()) {
-                throw new Exception("Please fill all the fields");
+            if (name.isEmpty()) {
+                throw new RequiredFieldException("name");
+            }
+            if (contact.isEmpty()) {
+                throw new RequiredFieldException("contact");
+            }
+            if (gender == null) {
+                throw new RequiredFieldException("gender");
+            }
+            if (regDate.isEmpty()) {
+                throw new RequiredFieldException("registration date");
             }
 
             if (!contact.matches("^07\\d{8}$")) {

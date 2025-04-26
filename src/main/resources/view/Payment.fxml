@@ -99,7 +99,6 @@
                 <!-- Buttons -->
                 <HBox alignment="CENTER" prefHeight="35.0" prefWidth="537.0" spacing="10.0">
                     <children>
-                        <Label fx:id="errorMessage" prefHeight="17.0" prefWidth="112.0" />
                         <Button fx:id="btnProcess" mnemonicParsing="false" onAction="#processPayment" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Process Payment">
                             <font>
                                 <Font name="System Bold" size="12.0" />
