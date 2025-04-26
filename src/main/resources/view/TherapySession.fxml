@@ -112,7 +112,6 @@
                 <!-- Buttons -->
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
-                        <Label fx:id="errorMessage" prefHeight="17.0" prefWidth="112.0" />
                         <Button fx:id="btnSchedule" mnemonicParsing="false" onAction="#scheduleSession" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Schedule">
                             <font>
                                 <Font name="System Bold" size="12.0" />

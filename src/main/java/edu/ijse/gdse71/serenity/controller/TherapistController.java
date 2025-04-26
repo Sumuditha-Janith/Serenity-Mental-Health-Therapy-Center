@@ -98,7 +98,7 @@ public class TherapistController implements Initializable {
 
             boolean isDeleted = therapistBO.deleteByPK(id);
             if (!isDeleted) {
-                throw new Exception("Failed to delete therapist");
+                throw new Exception("You cannot delete therapists associated in the Appointments table");
             }
 
             new Alert(Alert.AlertType.INFORMATION, "Therapist deleted successfully").show();

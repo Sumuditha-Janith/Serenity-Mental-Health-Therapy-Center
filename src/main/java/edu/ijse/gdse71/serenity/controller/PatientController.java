@@ -116,7 +116,7 @@ public class PatientController implements Initializable {
 
             boolean isDeleted = patientBO.deleteByPK(id);
             if (!isDeleted) {
-                throw new Exception("Failed to delete patient");
+                throw new Exception("You cannot delete patients who have Pending/Completed appointments.");
             }
 
             new Alert(Alert.AlertType.INFORMATION, "Patient deleted successfully").show();

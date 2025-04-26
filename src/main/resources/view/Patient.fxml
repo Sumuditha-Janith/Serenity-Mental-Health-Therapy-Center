@@ -100,7 +100,6 @@
                 <!-- Buttons -->
                 <HBox alignment="CENTER" spacing="10.0">
                     <children>
-                        <Label fx:id="errorMessage" prefHeight="18.0" prefWidth="121.0" text="Please fill all the fields." textFill="RED" />
                         <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addPatient" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Add">
                             <font>
                                 <Font name="System Bold" size="12.0" />

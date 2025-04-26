@@ -1,7 +1,6 @@
 package edu.ijse.gdse71.serenity.controller;
 
 import edu.ijse.gdse71.serenity.bo.BOFactory;
-import edu.ijse.gdse71.serenity.bo.custom.impl.TherapistBOImpl;
 import edu.ijse.gdse71.serenity.bo.custom.impl.TherapyProgramBOImpl;
 import edu.ijse.gdse71.serenity.dto.TherapyProgramDTO;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,12 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -50,9 +44,6 @@ public class TherapyProgramController implements Initializable {
     private TableColumn<TherapyProgramDTO, String> colProgramId;
 
     @FXML
-    private Label errorMessage;
-
-    @FXML
     private Label lblProgramId;
 
     @FXML
@@ -70,145 +61,186 @@ public class TherapyProgramController implements Initializable {
     @FXML
     private TextField txtName;
 
-    private String id;
-
     private final TherapyProgramBOImpl therapyProgramBO = (TherapyProgramBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPY_PROGRAM);
-    private final TherapistBOImpl therapistBO = (TherapistBOImpl) BOFactory.getInstance().getBO(BOFactory.BOType.THERAPIST);
+    private String id;
 
     @FXML
     void addTherapyProgram(ActionEvent event) {
-        String id = this.id;
-        String name = txtName.getText();
-        String duration = txtDuration.getText() + " " + selectTime.getValue();
-        String fee = txtFee.getText();
+        try {
+            String name = txtName.getText().trim();
+            String duration = txtDuration.getText().trim();
+            String timeUnit = selectTime.getValue();
+            String fee = txtFee.getText().trim();
 
-        if (name.isEmpty() || duration.isEmpty() || fee.isEmpty()) {
-            errorMessage.setText("Please fill all fields");
-            return;
-        }
+            if (name.isEmpty() || duration.isEmpty() || timeUnit == null || fee.isEmpty()) {
+                throw new Exception("Please fill all the fields");
+            }
 
-        TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
-        therapyProgramDTO.setProgramId(id);
-        therapyProgramDTO.setName(name);
-        therapyProgramDTO.setDuration(duration);
-        therapyProgramDTO.setFee(Double.parseDouble(fee));
+            if (!duration.matches("^\\d+$")) {
+                throw new Exception("Duration must be a number");
+            }
 
-        boolean isAdded = therapyProgramBO.save(therapyProgramDTO);
+            if (!fee.matches("^\\d+(\\.\\d{1,2})?$")) {
+                throw new Exception("Please enter a valid amount");
+            }
 
-        if (isAdded) {
-            errorMessage.setText("Therapy Program added successfully");
-            this.id = therapyProgramBO.getLastPK().orElse("0");
+            TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
+            therapyProgramDTO.setProgramId(this.id);
+            therapyProgramDTO.setName(name);
+            therapyProgramDTO.setDuration(duration + " " + timeUnit);
+            therapyProgramDTO.setFee(Double.parseDouble(fee));
+
+            boolean isSaved = therapyProgramBO.save(therapyProgramDTO);
+
+            if (!isSaved) {
+                throw new Exception("Failed to save therapy program");
+            }
+
+            new Alert(Alert.AlertType.INFORMATION, "Therapy program added successfully").show();
+            refreshPage();
+            this.id = therapyProgramBO.getLastPK().orElse("Error");
             lblProgramId.setText(this.id);
-            txtName.clear();
-            txtDuration.clear();
-            txtFee.clear();
-            selectTime.setValue(null);
             loadTherapyProgramTable();
-        } else {
-            errorMessage.setText("Failed to add Therapy Program");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @FXML
-    void deleteTherapyProgram(ActionEvent event) throws Exception {
-        String id = lblProgramId.getText();
-        boolean isDeleted = therapyProgramBO.deleteByPK(id);
+    void deleteTherapyProgram(ActionEvent event) {
+        try {
+            String id = lblProgramId.getText();
+            if (id == null || id.isEmpty()) {
+                throw new Exception("No therapy program selected");
+            }
 
-        if (isDeleted) {
-            txtName.clear();
-            txtDuration.clear();
-            txtFee.clear();
-            errorMessage.setText("");
-            selectTime.setValue(null);
-            lblProgramId.setText(this.id);
+            boolean isDeleted = therapyProgramBO.deleteByPK(id);
+            if (!isDeleted) {
+                throw new Exception("You cannot delete therapy programs associated in the Appointments table");
+            }
+
+            new Alert(Alert.AlertType.INFORMATION, "Therapy program deleted successfully").show();
+            refreshPage();
             loadTherapyProgramTable();
-        } else {
-            System.out.println("Failed to delete patient");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+
+    @FXML
+    void onClickTherapyProgramTable(MouseEvent event) {
+        try {
+            TherapyProgramDTO selectedProgram = tblTherapyPrograms.getSelectionModel().getSelectedItem();
+            if (selectedProgram == null) return;
+
+            lblProgramId.setText(selectedProgram.getProgramId());
+            txtName.setText(selectedProgram.getName());
+
+            String[] durationParts = selectedProgram.getDuration().split(" ");
+            txtDuration.setText(durationParts[0]);
+            selectTime.setValue(durationParts[1]);
+
+            txtFee.setText(String.valueOf(selectedProgram.getFee()));
+
+            btnAdd.setDisable(true);
+            btnUpdate.setDisable(false);
+            btnDelete.setDisable(false);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error loading therapy program: " + e.getMessage()).show();
         }
     }
 
     @FXML
     void resetForm(ActionEvent event) {
-        this.id = therapyProgramBO.getLastPK().orElse("0");
-        lblProgramId.setText(this.id);
-        txtName.clear();
-        txtDuration.clear();
-        txtFee.clear();
-        selectTime.setValue(null);
-
-        errorMessage.setText("");
-
-        btnAdd.setDisable(false);
-
-        tblTherapyPrograms.getSelectionModel().clearSelection();
-    }
-
-    @FXML
-    void onClickTherapyProgramTable(MouseEvent event) {
-        TherapyProgramDTO selectedPatient = tblTherapyPrograms.getSelectionModel().getSelectedItem();
-        if (selectedPatient != null) {
-            lblProgramId.setText(selectedPatient.getProgramId());
-            txtName.setText(selectedPatient.getName());
-            String duration = selectedPatient.getDuration();
-            String[] parts = duration.split(" ");
-            txtDuration.setText(parts[0]);
-            selectTime.setValue(parts[1]);
-            txtFee.setText(String.valueOf(selectedPatient.getFee()));
-            btnAdd.setDisable(true);
-        }
+        refreshPage();
     }
 
     @FXML
     void updateTherapyProgram(ActionEvent event) {
-        String id = lblProgramId.getText();
-        String name = txtName.getText();
-        String duration = txtDuration.getText() + " " + selectTime.getValue();
-        String fee = txtFee.getText();
+        try {
+            String id = lblProgramId.getText();
+            String name = txtName.getText().trim();
+            String duration = txtDuration.getText().trim();
+            String timeUnit = selectTime.getValue();
+            String fee = txtFee.getText().trim();
 
-        if(name.isEmpty() || duration.isEmpty() || fee.isEmpty()){
-            errorMessage.setText("Please fill all fields");
-            return;
-        }
+            if (name.isEmpty() || duration.isEmpty() || timeUnit == null || fee.isEmpty()) {
+                throw new Exception("Please fill all the fields");
+            }
 
-        TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
-        therapyProgramDTO.setProgramId(id);
-        therapyProgramDTO.setName(name);
-        therapyProgramDTO.setDuration(duration);
-        therapyProgramDTO.setFee(Double.parseDouble(fee));
+            if (!duration.matches("^\\d+$")) {
+                throw new Exception("Duration must be a whole number");
+            }
 
-        boolean isUpdated = therapyProgramBO.update(therapyProgramDTO);
+            if (!fee.matches("^\\d+(\\.\\d{1,2})?$")) {
+                throw new Exception("Invalid fee format. Please enter a valid amount");
+            }
 
-        if(isUpdated){
-            errorMessage.setText("Therapy Program updated successfully");
-            this.id = therapyProgramBO.getLastPK().orElse("0");
-            lblProgramId.setText(this.id);
-            txtName.clear();
-            txtDuration.clear();
-            txtFee.clear();
-            selectTime.setValue(null);
+            TherapyProgramDTO therapyProgramDTO = new TherapyProgramDTO();
+            therapyProgramDTO.setProgramId(id);
+            therapyProgramDTO.setName(name);
+            therapyProgramDTO.setDuration(duration + " " + timeUnit);
+            therapyProgramDTO.setFee(Double.parseDouble(fee));
+
+            boolean isUpdated = therapyProgramBO.update(therapyProgramDTO);
+
+            if (!isUpdated) {
+                throw new Exception("Failed to update therapy program");
+            }
+
+            new Alert(Alert.AlertType.INFORMATION, "Therapy program updated successfully").show();
+            refreshPage();
             loadTherapyProgramTable();
-        }else{
-            errorMessage.setText("Failed to update Therapy Program");
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        selectTime.getItems().addAll("Weeks", "Months", "Years");
+        try {
+            selectTime.getItems().addAll("Weeks", "Months", "Years");
+            this.id = therapyProgramBO.getLastPK().orElse("Error");
+            lblProgramId.setText(this.id);
 
-        this.id = therapyProgramBO.getLastPK().orElse("0");
-        lblProgramId.setText(this.id);
+            colProgramId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProgramId()));
+            colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+            colDuration.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDuration()));
+            colFee.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFee()));
 
-        colProgramId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProgramId()));
-        colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
-        colDuration.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDuration()));
-        colFee.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getFee()));
-        loadTherapyProgramTable();
+            loadTherapyProgramTable();
+            refreshPage();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Initialization error: " + e.getMessage()).show();
+        }
     }
 
     private void loadTherapyProgramTable() {
-        List<TherapyProgramDTO> therapyProgramList = therapyProgramBO.getAll();
-        ObservableList<TherapyProgramDTO> therapyProgramTMS = FXCollections.observableArrayList(therapyProgramList);
-        tblTherapyPrograms.setItems(therapyProgramTMS);
+        try {
+            List<TherapyProgramDTO> programList = therapyProgramBO.getAll();
+            ObservableList<TherapyProgramDTO> programTMS = FXCollections.observableArrayList(programList);
+            tblTherapyPrograms.setItems(programTMS);
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Failed to load therapy programs: " + e.getMessage()).show();
+        }
+    }
+
+    private void refreshPage() {
+        try {
+            txtName.clear();
+            txtDuration.clear();
+            txtFee.clear();
+            selectTime.setValue(null);
+            this.id = therapyProgramBO.getLastPK().orElse("Error");
+            lblProgramId.setText(this.id);
+
+            btnAdd.setDisable(false);
+            btnUpdate.setDisable(true);
+            btnDelete.setDisable(true);
+
+            tblTherapyPrograms.getSelectionModel().clearSelection();
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error refreshing form: " + e.getMessage()).show();
+        }
     }
 }
