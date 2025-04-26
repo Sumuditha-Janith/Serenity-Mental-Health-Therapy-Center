@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.PaymentController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #D8DBE2;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.PaymentController">
     <children>
         <VBox layoutX="1.0" prefHeight="600.0" prefWidth="800.0" spacing="20.0">
             <padding>
@@ -18,7 +18,7 @@
             </padding>
             <children>
                 <!-- Header -->
-                <Label text="Payment &amp; Invoice Management" textFill="GREEN">
+                <Label text="Payment &amp; Invoice Management" textFill="#373f51">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -34,60 +34,60 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="90.0" text="Payment ID:" textFill="GREEN">
+                                        <Label prefWidth="90.0" text="Payment ID:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblPaymentId" text="Automatic" textFill="#2c3e50">
+                                        <Label fx:id="lblPaymentId" textFill="#1b1b1e">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>
                                         </Label>
                                     </children>
                                 </HBox>
-                                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <HBox alignment="CENTER_LEFT" prefHeight="18.0" prefWidth="314.0" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="90.0" text="Date:" textFill="GREEN">
+                                        <Label prefWidth="90.0" text="Date:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblDate" text="Date" />
+                                        <Label fx:id="lblDate" textFill="#1b1b1e" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="90.0" text="Amount:" textFill="GREEN">
+                                        <Label prefWidth="90.0" text="Amount:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblAmount" text="Amount" />
+                                        <Label fx:id="lblAmount" textFill="#1b1b1e" />
                                     </children>
                                 </HBox>
                             </children>
                         </VBox>
                         <VBox spacing="15.0">
                             <children>
-                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="447.0" spacing="10.0">
+                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="382.0" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="90.0" text="Patient:" textFill="GREEN">
+                                        <Label prefWidth="90.0" text="Patient:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblPatient" text="Patient" />
+                                        <Label fx:id="lblPatient" textFill="#1b1b1e" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="90.0" text="Session:" textFill="GREEN">
+                                        <Label prefWidth="90.0" text="Session:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblSession" text="Session" />
+                                        <Label fx:id="lblSession" textFill="#1b1b1e" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0" />
@@ -117,7 +117,7 @@
                 </HBox>
 
                 <!-- Payment Records Header -->
-                <Label text="Payment Records:" textFill="GREEN">
+                <Label text="Payment Records:" textFill="#373f51">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -127,7 +127,7 @@
                 </Label>
 
                 <!-- Payment Records Table -->
-                <TableView fx:id="tblPayments" onMouseClicked="#paymentSelectOnAction" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblPayments" onMouseClicked="#paymentSelectOnAction" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #A9BCD0;" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colPaymentId" prefWidth="92.66668319702148" text="Payment ID" />
                         <TableColumn fx:id="colAmount" prefWidth="143.33332061767578" text="Amount" />

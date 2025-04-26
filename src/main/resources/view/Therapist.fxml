@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.TherapistController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #D8DBE2;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.TherapistController">
     <children>
         <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0">
             <padding>
@@ -20,7 +20,7 @@
             </padding>
             <children>
                 <!-- Header -->
-                <Label text="Therapist" textFill="GREEN">
+                <Label text="Therapist" textFill="#373f51">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -36,12 +36,12 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="ID" textFill="GREEN">
+                                        <Label prefWidth="80.0" text="ID" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblTherapistId" text="ID" textFill="#deffde">
+                                        <Label fx:id="lblTherapistId" textFill="#1b1b1e">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>
@@ -50,7 +50,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefHeight="17.0" prefWidth="82.0" text="Specialization:" textFill="GREEN">
+                                        <Label prefHeight="17.0" prefWidth="82.0" text="Specialization:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
@@ -64,7 +64,7 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Name:" textFill="GREEN">
+                                        <Label prefWidth="80.0" text="Name:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
@@ -91,7 +91,7 @@
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteTherapist" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #e74c3c; -x-text-fill: white;" text="Delete">
+                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteTherapist" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #e74c3c;" text="Delete" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
@@ -108,7 +108,7 @@
                 </HBox>
 
                 <!-- Therapist Records Header -->
-                <Label text="Therapist Records:" textFill="GREEN">
+                <Label text="Therapist Records:" textFill="#373f51">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -118,11 +118,11 @@
                 </Label>
 
                 <!-- Therapist Records Table -->
-                <TableView fx:id="tblTherapists" onMouseClicked="#onClickTherapistTable" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblTherapists" onMouseClicked="#onClickTherapistTable" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #A9BCD0;" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colId" prefWidth="100.0" text="ID" />
-                        <TableColumn fx:id="colName" prefWidth="250.0" text="Name" />
-                        <TableColumn fx:id="colSpecialization" prefWidth="350.0" text="Specialization" />
+                        <TableColumn fx:id="colName" prefWidth="301.6000442504883" text="Name" />
+                        <TableColumn fx:id="colSpecialization" prefWidth="336.7998962402344" text="Specialization" />
                     </columns>
                     <VBox.margin>
                         <Insets />

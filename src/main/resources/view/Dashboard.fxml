@@ -9,11 +9,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="30.0"
-      style="-fx-background-color: #151515;"
-      xmlns="http://javafx.com/javafx/22"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="edu.ijse.gdse71.serenity.controller.DashboardController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" spacing="30.0" style="-fx-background-color: #D8DBE2;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.DashboardController">
    <padding>
       <Insets bottom="30.0" left="30.0" right="30.0" top="40.0" />
    </padding>
@@ -21,14 +17,9 @@
       <HBox alignment="CENTER" spacing="20.0" />
       <Pane prefHeight="566.0" prefWidth="739.0">
          <children>
-            <Label layoutX="111.0" layoutY="49.0" prefHeight="38.0" prefWidth="528.0" text="Welcome to Mental Health Therapy Center" textFill="GREEN">
-               <font>
-                  <Font name="System Bold" size="26.0" />
-               </font>
-            </Label>
             <HBox layoutX="111.0" layoutY="122.0" prefHeight="128.0" prefWidth="528.0">
                <children>
-                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #262626; -fx-background-radius: 8;">
+                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #A9BCD0; -fx-background-radius: 8;">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
@@ -40,12 +31,12 @@
                         </DropShadow>
                      </effect>
                      <children>
-                        <Label fx:id="patientsCount" text="0" textFill="GREEN">
+                        <Label fx:id="patientsCount" text="0" textFill="#373f51">
                            <font>
                               <Font name="System Bold" size="36.0" />
                            </font>
                         </Label>
-                        <Label text="Patients" textFill="GREEN">
+                        <Label text="Patients" textFill="#373f51">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -55,7 +46,7 @@
                         <Insets right="4.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #262626; -fx-background-radius: 8;">
+                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #A9BCD0; -fx-background-radius: 8;">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
@@ -67,12 +58,12 @@
                         </DropShadow>
                      </effect>
                      <children>
-                        <Label fx:id="therapistsCount" text="0" textFill="GREEN">
+                        <Label fx:id="therapistsCount" text="0" textFill="#373f51">
                            <font>
                               <Font name="System Bold" size="36.0" />
                            </font>
                         </Label>
-                        <Label text="Therapists" textFill="GREEN">
+                        <Label text="Therapists" textFill="#373f51">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -82,7 +73,7 @@
                         <Insets right="4.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #262626; -fx-background-radius: 8;">
+                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #A9BCD0; -fx-background-radius: 8;">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
@@ -94,12 +85,12 @@
                         </DropShadow>
                      </effect>
                      <children>
-                        <Label fx:id="programsCount" text="0" textFill="GREEN">
+                        <Label fx:id="programsCount" text="0" textFill="#373f51">
                            <font>
                               <Font name="System Bold" size="36.0" />
                            </font>
                         </Label>
-                        <Label text="Programs" textFill="GREEN">
+                        <Label text="Programs" textFill="#373f51">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -109,17 +100,17 @@
                         <Insets right="4.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #262626; -fx-background-radius: 8;">
+                  <VBox alignment="CENTER" maxHeight="128.0" maxWidth="128.0" minHeight="128.0" minWidth="128.0" prefHeight="128.0" prefWidth="128.0" style="-fx-background-color: #A9BCD0; -fx-background-radius: 8;">
                      <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </padding>
                      <children>
-                        <Label fx:id="sessionsCount" text="0" textFill="GREEN">
+                        <Label fx:id="sessionsCount" text="0" textFill="#373f51">
                            <font>
                               <Font name="System Bold" size="36.0" />
                            </font>
                         </Label>
-                        <Label text="Sessions Today" textFill="GREEN">
+                        <Label text="Sessions Today" textFill="#373f51">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -135,6 +126,11 @@
                   </VBox>
                </children>
             </HBox>
+            <Label layoutX="59.0" layoutY="51.0" prefHeight="38.0" prefWidth="633.0" text="Welcome to Serenity Mental Health Therapy Center" textFill="#373f51">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
          </children>
          <VBox.margin>
             <Insets />

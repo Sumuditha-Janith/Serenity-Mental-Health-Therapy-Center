@@ -13,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="LogInAnchor" fx:id="mainAnchor" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #1B1B1E;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.LogInScreenController">
+<AnchorPane id="LogInAnchor" fx:id="mainAnchor" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #D8DBE2;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.LogInScreenController">
    <children>
-      <Rectangle fill="#58a4b0cf" height="600.0" width="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Rectangle fill="#58a4b0" height="600.0" width="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Text fill="WHITE" layoutX="123.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Arial" size="18.0" />
@@ -67,7 +67,7 @@
                         <Font name="Arial" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="#58a4b0" onMouseClicked="#navSignUp" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="Sign up">
+                  <Text fill="#5cb1bf" onMouseClicked="#navSignUp" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="Sign up">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
@@ -81,7 +81,7 @@
       </VBox>
       <VBox layoutX="22.0" layoutY="100.0" prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Text fill="#d8dbe2" strokeType="OUTSIDE" strokeWidth="0.0" text="Serenity" textAlignment="CENTER" wrappingWidth="455.83538818359375">
+            <Text fill="#373f51" strokeType="OUTSIDE" strokeWidth="0.0" text="Serenity" textAlignment="CENTER" wrappingWidth="455.83538818359375">
                <font>
                   <Font name="Segoe UI Historic" size="42.0" />
                </font>
@@ -93,7 +93,7 @@
                   </DropShadow>
                </effect>
             </Text>
-            <Text fill="#d8dbe2" strokeType="OUTSIDE" strokeWidth="0.0" text="Mental Health" textAlignment="CENTER" wrappingWidth="455.83538818359375">
+            <Text fill="#373f51" strokeType="OUTSIDE" strokeWidth="0.0" text="Mental Health" textAlignment="CENTER" wrappingWidth="455.83538818359375">
                <font>
                   <Font name="Segoe UI Historic" size="42.0" />
                </font>
@@ -105,7 +105,7 @@
                   </DropShadow>
                </effect>
             </Text>
-            <Text fill="#d8dbe2" strokeType="OUTSIDE" strokeWidth="0.0" text="Therapy Center" textAlignment="CENTER" wrappingWidth="455.83538818359375">
+            <Text fill="#373f51" strokeType="OUTSIDE" strokeWidth="0.0" text="Therapy Center" textAlignment="CENTER" wrappingWidth="455.83538818359375">
                <font>
                   <Font name="Segoe UI Historic" size="42.0" />
                </font>

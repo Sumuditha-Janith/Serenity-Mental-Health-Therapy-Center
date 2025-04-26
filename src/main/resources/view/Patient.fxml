@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #151515;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.PatientController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #D8DBE2;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.ijse.gdse71.serenity.controller.PatientController">
     <children>
         <VBox prefHeight="600.0" prefWidth="800.0" spacing="20.0">
             <padding>
@@ -20,7 +20,7 @@
             </padding>
             <children>
                 <!-- Header -->
-                <Label text="Patient" textFill="GREEN">
+                <Label text="Patient" textFill="#373f51">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -36,12 +36,12 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="ID" textFill="WHITE">
+                                        <Label prefWidth="80.0" text="ID" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="lblPatientId" text="ID" textFill="WHITE">
+                                        <Label fx:id="lblPatientId" text="ID" textFill="#1b1b1e">
                                             <font>
                                                 <Font size="12.0" />
                                             </font>
@@ -50,7 +50,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Contact:" textFill="WHITE">
+                                        <Label prefWidth="80.0" text="Contact:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
@@ -60,7 +60,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Gender:" textFill="WHITE">
+                                        <Label prefWidth="80.0" text="Gender:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
@@ -74,7 +74,7 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Name:" textFill="WHITE">
+                                        <Label prefWidth="80.0" text="Name:" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
@@ -84,7 +84,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label prefWidth="80.0" text="Reg. Date" textFill="WHITE">
+                                        <Label prefWidth="80.0" text="Reg. Date" textFill="#373f51">
                                             <font>
                                                 <Font name="System Bold" size="12.0" />
                                             </font>
@@ -128,7 +128,7 @@
                 </HBox>
 
                 <!-- Patient Records Header -->
-                <Label text="Patient Records:" textFill="GREEN">
+                <Label text="Patient Records:" textFill="#373f51">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -138,7 +138,7 @@
                 </Label>
 
                 <!-- Patient Records Table -->
-                <TableView fx:id="tblPatients" onMouseClicked="#onClickPatientTable" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #262626;" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tblPatients" onMouseClicked="#onClickPatientTable" prefHeight="290.0" prefWidth="740.0" style="-fx-background-color: #A9BCD0;" VBox.vgrow="ALWAYS">
                     <columns>
                         <TableColumn fx:id="colId" prefWidth="100.0" text="ID" />
                         <TableColumn fx:id="colName" prefWidth="200.0" text="Name" />
