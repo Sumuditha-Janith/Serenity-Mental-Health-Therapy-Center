@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "payments")
 public class Payment implements SuperEntity {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private double amount;
     private String date;

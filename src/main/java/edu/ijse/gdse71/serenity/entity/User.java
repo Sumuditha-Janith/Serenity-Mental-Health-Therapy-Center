@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class User implements SuperEntity{
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String username;
     private String password;

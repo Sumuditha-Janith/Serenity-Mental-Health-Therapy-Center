@@ -200,7 +200,7 @@
                                                         <Font name="System Bold" size="36.0" />
                                                     </font>
                                                 </Label>
-                                                <Label text="Sessions Today" textFill="#373f51">
+                                                <Label text="Total Sessions" textFill="#373f51">
                                                     <font>
                                                         <Font size="14.0" />
                                                     </font>

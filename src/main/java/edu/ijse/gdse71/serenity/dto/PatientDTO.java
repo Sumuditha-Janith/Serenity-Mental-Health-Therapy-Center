@@ -15,6 +15,4 @@ public class PatientDTO {
     private String gender;
     private String birthDate;
 
-//    @OneToMany(mappedBy = "patient")
-//    private List<TherapySessionsDTO> therapySessions;
 }

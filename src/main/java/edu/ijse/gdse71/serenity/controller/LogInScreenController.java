@@ -38,7 +38,6 @@ public class LogInScreenController {
         String userName = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
 
-        // Input validations
         if (userName.isEmpty() || password.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Error", "Username and password cannot be empty");
             txtUsername.requestFocus();
@@ -86,7 +85,6 @@ public class LogInScreenController {
                 return;
             }
 
-            // Successful login
             String dashboardFxml = role.equals("Admin") ? "/view/AdminDashboard.fxml" : "/view/ReceptionistDashboard.fxml";
             String roleName = role.equals("Admin") ? "Admin" : "Receptionist";
 

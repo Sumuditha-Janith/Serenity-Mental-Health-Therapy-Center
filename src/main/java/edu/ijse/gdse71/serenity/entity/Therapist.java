@@ -15,7 +15,6 @@ import java.util.List;
 public class Therapist implements SuperEntity{
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String name;
     private String specialization;

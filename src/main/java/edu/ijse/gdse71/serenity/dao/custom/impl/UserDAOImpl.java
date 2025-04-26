@@ -56,14 +56,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Optional<String> getLastPK() {
-//        Session session = factoryConfiguration.getSession();
-//
-//        Long lastPk = session
-//                .createQuery("SELECT c.id FROM User c ORDER BY c.id DESC", Long.class)
-//                .setMaxResults(1)
-//                .uniqueResult();
-//
-//        return Optional.ofNullable(lastPk).map(String::valueOf);
+
 
         Session session = null;
         try {
