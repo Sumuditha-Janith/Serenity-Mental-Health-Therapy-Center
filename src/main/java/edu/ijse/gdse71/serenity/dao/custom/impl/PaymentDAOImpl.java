@@ -94,14 +94,15 @@ public class PaymentDAOImpl implements PaymentDAO {
     }
 
     @Override
-    public boolean updatePaymentStatus(String paymentId, String status) {
+    public boolean updatePaymentStatus(String paymentId, String status, String date) {
         Transaction transaction = null;
         try (Session session = FactoryConfiguration.getInstance().getSession()) {
             transaction = session.beginTransaction();
 
             session.createQuery(
-                            "UPDATE Payment SET status = :status WHERE id = :id")
+                            "UPDATE Payment SET status = :status, date = :date WHERE id = :id")
                     .setParameter("status", status)
+                    .setParameter("date", date)
                     .setParameter("id", paymentId)
                     .executeUpdate();
 

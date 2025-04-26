@@ -32,6 +32,11 @@ public class PaymentBOImpl implements PaymentBO {
     }
 
     @Override
+    public boolean updatePaymentStatus(String paymentId, String status) {
+        return false;
+    }
+
+    @Override
     public boolean deleteByPK(String pk) throws Exception {
         return false;
     }
@@ -101,8 +106,8 @@ public class PaymentBOImpl implements PaymentBO {
     }
 
     @Override
-    public boolean updatePaymentStatus(String paymentId, String status) {
-        return paymentDAO.updatePaymentStatus(paymentId, status);
+    public boolean updatePaymentStatus(String paymentId, String status, String date) {
+        return paymentDAO.updatePaymentStatus(paymentId, status, date);
     }
 
 }

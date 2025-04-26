@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -61,8 +62,10 @@ public class PaymentController implements Initializable {
                 throw new Exception("Please select a payment to process");
             }
 
+            String currentDate = LocalDate.now().toString();
+
             boolean paymentUpdated = paymentBO.updatePaymentStatus(
-                    selectedPayment.getId(), "Paid");
+                    selectedPayment.getId(), "Paid", currentDate);
 
             if (!paymentUpdated) {
                 throw new Exception("Failed to update payment status");
